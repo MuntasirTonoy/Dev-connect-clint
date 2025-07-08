@@ -64,7 +64,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="animate-fade-in p-10 space-y-10">
+    <div className="animate-fade-in  p-10 space-y-10">
       <form className="space-y-4" onSubmit={handleSubmit(handleLogin)}>
         {/* Email */}
         <input
@@ -98,7 +98,7 @@ const LoginForm = () => {
         )}
 
         {/* Login Button */}
-        <button className="btn bg-neutral text-base-100 w-full" type="submit">
+        <button className="btn bg-neutral text-white w-full" type="submit">
           Login
         </button>
       </form>
