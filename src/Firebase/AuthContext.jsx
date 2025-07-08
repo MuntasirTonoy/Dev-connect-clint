@@ -20,7 +20,7 @@ const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
   // Create user with email and password
-  const createUser = async (email, password) => {
+  const createUser = async (email, password, name) => {
     setLoading(true);
     setError(null);
     try {
@@ -29,6 +29,9 @@ const AuthProvider = ({ children }) => {
         email,
         password
       );
+      await updateProfile(result.user, {
+        displayName: name,
+      });
       return result;
     } catch (err) {
       setError(err.message);
@@ -44,6 +47,7 @@ const AuthProvider = ({ children }) => {
     setError(null);
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
+      await updateUserProfile(result.user.displayName || "Google User");
       return result;
     } catch (err) {
       setError(err.message);
@@ -55,14 +59,16 @@ const AuthProvider = ({ children }) => {
 
   // Sign in with Google
   const signInWithGoogle = async () => {
-    setLoading(true);
-    setError(null);
     try {
+      setLoading(true);
+      setError(null);
       const result = await signInWithPopup(auth, googleProvider);
-      return result;
-    } catch (err) {
-      setError(err.message);
-      throw err;
+      await updateUserProfile(result.user.displayName || "Google User");
+      return result; // Success
+    } catch (error) {
+      console.error("Google login error:", error); // Log error
+      setError(error.message || "Google login failed");
+      throw error; // Re-throw if needed (optional)
     } finally {
       setLoading(false);
     }
