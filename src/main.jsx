@@ -4,11 +4,12 @@ import "./index.css";
 import RootLayout from "./Root/RootLayout";
 import { RouterProvider } from "react-router";
 import router from "./Routes/Router";
+import AuthProvider from "./Firebase/AuthContext";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router}>
-      <RootLayout />
-    </RouterProvider>
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>
 );

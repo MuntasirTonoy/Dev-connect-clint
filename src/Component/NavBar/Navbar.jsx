@@ -62,9 +62,12 @@ const Navbar = () => {
                 />
               </svg>
             </button>
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+            <NavLink
+              to="/join"
+              className="bg-gray-700 text-white px-4 py-2 rounded-md text-sm font-medium"
+            >
               Join Us
-            </button>
+            </NavLink>
 
             {/* Profile dropdown */}
             <div className="relative ml-4">
@@ -86,13 +89,7 @@ const Navbar = () => {
                   </div>
                   <NavLink
                     to="/dashboard"
-                    className={({ isActive }) =>
-                      `block px-4 py-2 text-sm ${
-                        isActive
-                          ? "bg-gray-100 text-gray-900"
-                          : "text-gray-700 hover:bg-gray-100"
-                      }`
-                    }
+                    className="block px-4 py-2 text-sm  bg-gray-100 text-gray-900"
                   >
                     Dashboard
                   </NavLink>
@@ -108,7 +105,7 @@ const Navbar = () => {
           <div className="md:hidden flex items-center">
             <button
               onClick={toggleMenu}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:outline-none"
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 "
             >
               <svg
                 className={`${isMenuOpen ? "hidden" : "block"} h-6 w-6`}
@@ -145,35 +142,25 @@ const Navbar = () => {
 
       {/* Mobile Menu (hidden on desktop) */}
       <div className={`${isMenuOpen ? "block" : "hidden"} md:hidden`}>
-        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <div className="px-2 pt-2 pb-3 space-y-1  sm:px-3 ">
           <NavLink
-            to="/home"
-            className={({ isActive }) =>
-              `block px-3 py-2 rounded-md text-base font-medium ${
-                isActive
-                  ? "bg-gray-900 text-white"
-                  : "text-gray-700 hover:bg-gray-700 hover:text-white"
-              }`
-            }
+            to="/"
+            className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-700 hover:text-white "
           >
             Home
           </NavLink>
           <NavLink
             to="/membership"
-            className={({ isActive }) =>
-              `block px-3 py-2 rounded-md text-base font-medium ${
-                isActive
-                  ? "bg-gray-900 text-white"
-                  : "text-gray-700 hover:bg-gray-700 hover:text-white"
-              }`
-            }
+            className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-700 hover:text-white "
           >
             Membership
           </NavLink>
-          <button className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-700 hover:text-white">
-            Notifications
-          </button>
-
+          <NavLink
+            to="/notification"
+            className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-700 hover:text-white "
+          >
+            Notification
+          </NavLink>
           {/* Profile section in mobile menu */}
           <div className="pt-4 pb-3 border-t border-gray-200">
             <div className="flex items-center px-5">
@@ -184,13 +171,7 @@ const Navbar = () => {
             <div className="mt-3 px-2 space-y-1">
               <NavLink
                 to="/dashboard"
-                className={({ isActive }) =>
-                  `block px-3 py-2 rounded-md text-base font-medium ${
-                    isActive
-                      ? "bg-gray-100 text-gray-900"
-                      : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                  }`
-                }
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-700 hover:text-white "
               >
                 Dashboard
               </NavLink>
