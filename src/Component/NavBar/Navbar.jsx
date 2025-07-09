@@ -9,7 +9,7 @@ import { IoMdNotificationsOutline } from "react-icons/io";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const { user } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -22,6 +22,9 @@ const Navbar = () => {
     // Close mobile menu when profile is toggled
     if (isMenuOpen) setIsMenuOpen(false);
   };
+  const handleLogOut = () => {
+    logOut();
+  };
 
   return (
     <nav className="bg-base shadow-md">
@@ -32,7 +35,7 @@ const Navbar = () => {
             <div className="flex-shrink-0">
               <img className="h-10 w-8" src={siteLogo} alt="Logo" />
             </div>
-            <span className="ml-2 text-3xl font-bold text-base-content">
+            <span className="ml-2 text-lg font-extrabold text-base-content">
               Dev Connect
             </span>
           </div>
@@ -77,37 +80,42 @@ const Navbar = () => {
             </NavLink>
 
             {/* Profile dropdown */}
-            <div className="relative ml-4">
-              <button
-                onClick={toggleProfile}
-                className="flex items-center focus:outline-none cursor-pointer "
-              >
-                <img
-                  className="h-8 w-8 rounded-full"
-                  src="https://via.placeholder.com/32"
-                  alt="Profile"
-                />
-              </button>
+            {user && (
+              <div className="relative ml-4">
+                <button
+                  onClick={toggleProfile}
+                  className="flex items-center focus:outline-none cursor-pointer"
+                >
+                  <img
+                    className="h-8 w-8 rounded-full"
+                    src="https://via.placeholder.com/32"
+                    alt="Profile"
+                  />
+                </button>
 
-              {isProfileOpen && (
-                <div className="origin-top-right absolute right-0 mt-3 w-48 rounded-md shadow-lg bg-base-300  ring-opacity-5 py-1 z-50">
-                  <div className="px-4 py-2 border-b">
-                    <p className="text-sm font-semibold text-base-100 rounded-full bg-base-content btn">
-                      {user.displayName}
-                    </p>
+                {isProfileOpen && (
+                  <div className="origin-top-right absolute right-0 mt-3 w-48 rounded-md shadow-lg bg-base-300 ring-opacity-5 py-1 z-50">
+                    <div className="px-4 py-2 border-b">
+                      <p className="text-sm font-semibold text-base-100 rounded-full bg-base-content btn">
+                        {user.displayName}
+                      </p>
+                    </div>
+                    <NavLink
+                      to="/dashboard"
+                      className="block px-4 py-2 text-md font-semibold text-base-content hover:bg-base-content hover:text-base-100"
+                    >
+                      Dashboard
+                    </NavLink>
+                    <button
+                      onClick={handleLogOut}
+                      className="flex items-center gap-3 w-full text-left px-4 py-2 text-md font-semibold hover:bg-base-content hover:text-base-100"
+                    >
+                      Logout <FiLogOut />
+                    </button>
                   </div>
-                  <NavLink
-                    to="/dashboard"
-                    className="block px-4 py-2 text-md font-semibold text-base-content hover:bg-base-content hover:text-base-100"
-                  >
-                    Dashboard
-                  </NavLink>
-                  <button className="flex items-center gap-3 w-full text-left px-4 py-2 text-md font-semibold hover:bg-base-content hover:text-base-100">
-                    Logout <FiLogOut />
-                  </button>
-                </div>
-              )}
-            </div>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Mobile menu button (hidden on desktop) */}
@@ -150,47 +158,55 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Menu (hidden on desktop) */}
-      <div className={`${isMenuOpen ? "block" : "hidden"} md:hidden`}>
-        <div className="px-2 pt-2 pb-3 space-y-1  sm:px-3 ">
-          <NavLink
-            to="/"
-            className="block px-3 py-2 rounded-md text-base font-medium text-base-content  "
-          >
-            Home
-          </NavLink>
-          <NavLink
-            to="/membership"
-            className="block px-3 py-2 rounded-md text-base font-medium text-base-content  "
-          >
-            Membership
-          </NavLink>
-          <NavLink
-            to="/notification"
-            className="block px-3 py-2 rounded-md text-base font-medium text-base-content "
-          >
-            Notification
-          </NavLink>
-          {/* Profile section in mobile menu */}
-          <div className="pt-4 pb-3 border-t border-neutral-content">
-            <div className="flex items-center px-5">
-              <div className="text-base font-medium text-base-content ">
-                John Doe
+      {isMenuOpen && (
+        <div className="md:hidden">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <NavLink
+              to="/"
+              className="block px-3 py-2 rounded-md text-base font-medium text-base-content"
+            >
+              Home
+            </NavLink>
+            <NavLink
+              to="/membership"
+              className="block px-3 py-2 rounded-md text-base font-medium text-base-content"
+            >
+              Membership
+            </NavLink>
+            <NavLink
+              to="/notification"
+              className="block px-3 py-2 rounded-md text-base font-medium text-base-content"
+            >
+              Notification
+            </NavLink>
+
+            {/* Profile section in mobile menu - only if user is logged in */}
+            {user && (
+              <div className="pt-4 pb-3 border-t border-neutral-content">
+                <div className="flex items-center px-5">
+                  <div className="text-base font-medium text-base-content">
+                    {user.displayName}
+                  </div>
+                </div>
+                <div className="mt-3 px-2 space-y-1">
+                  <NavLink
+                    to="/dashboard"
+                    className="block px-3 py-2 rounded-md text-base font-medium text-base-content"
+                  >
+                    Dashboard
+                  </NavLink>
+                  <button
+                    onClick={handleLogOut}
+                    className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-base-content"
+                  >
+                    Logout
+                  </button>
+                </div>
               </div>
-            </div>
-            <div className="mt-3 px-2 space-y-1">
-              <NavLink
-                to="/dashboard"
-                className="block px-3 py-2 rounded-md text-base font-medium text-base-content  "
-              >
-                Dashboard
-              </NavLink>
-              <button className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-base-content">
-                Logout
-              </button>
-            </div>
+            )}
           </div>
         </div>
-      </div>
+      )}
     </nav>
   );
 };

@@ -12,7 +12,7 @@ const Footer = () => {
           Providing reliable tech since 1992
         </p>
         <p>
-          Copyright © {new Date().getFullYear()} - All right reserved by Tonoy
+          Copyright © {new Date().getFullYear()} - All right reserved byTonoy
         </p>
       </aside>
       <nav>
