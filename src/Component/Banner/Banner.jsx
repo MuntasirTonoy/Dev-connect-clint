@@ -4,7 +4,7 @@ import Search from "./Search";
 const Banner = () => {
   return (
     <section
-      className="relative bg-cover bg-top h-[100vh] flex items-center justify-center text-center"
+      className="relative container  mx-auto bg-cover bg-top h-[70vh] md:rounded-xl overflow-hidden flex items-center justify-center text-center"
       style={{
         backgroundImage: `url('https://i.ibb.co/dC31frW/Chat-GPT-Image-Jul-9-2025-10-41-09-AM.png')`,
       }}

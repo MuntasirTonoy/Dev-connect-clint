@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Ethan Carter",
+    "time": "1 day ago",
+    "message": "Great question! For project structure, I recommend organizing your backend and frontend into separate directories. Use npm or yarn to manage dependencies. For authentication, use JWT. For state management, try Context or Redux.",
+    "avatar": "https://via.placeholder.com/40",
+    "postTitle": "Best Practices for Full Stack JavaScript Projects",
+    "postAuthor": "Sarah Johnson"
+  },
+  {
+    "name": "Olivia Harper",
+    "time": "1 day ago",
+    "message": "I'd recommend using Express generator for backend and Vite for frontend. Use dotenv for environment configs too.",
+    "avatar": "https://via.placeholder.com/40",
+    "postTitle": "Best Practices for Full Stack JavaScript Projects",
+    "postAuthor": "Sarah Johnson"
+  },
+  {
+    "name": "Michael Chen",
+    "time": "2 days ago",
+    "message": "Don't forget about testing! Jest for unit tests and Cypress for E2E testing can save you lots of debugging time later.",
+    "avatar": "https://via.placeholder.com/40",
+    "postTitle": "Testing Strategies for React Applications",
+    "postAuthor": "David Wilson"
+  },
+  {
+    "name": "Sophia Rodriguez",
+    "time": "3 days ago",
+    "message": "Consider using TypeScript if your project is large-scale. The type safety is worth the initial setup time.",
+    "avatar": "https://via.placeholder.com/40",
+    "postTitle": "TypeScript vs JavaScript in 2023",
+    "postAuthor": "Emma Thompson"
+  }
+]

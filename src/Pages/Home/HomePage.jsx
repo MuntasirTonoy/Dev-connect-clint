@@ -5,7 +5,7 @@ import Posts from "../../Component/Posts/Posts";
 
 const HomePage = () => {
   return (
-    <div>
+    <div className="space-y-20">
       <Banner />
       <Announcement />
       <Posts />

@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { GoArrowDown, GoArrowUp, GoComment } from "react-icons/go";
+import { Link } from "react-router";
 dayjs.extend(relativeTime);
 
 const PostCard = ({ post }) => {
@@ -8,7 +9,7 @@ const PostCard = ({ post }) => {
   const timeAgo = dayjs(post.timeOfPost).fromNow();
 
   return (
-    <div className=" p-7 rounded shadow-xs mb-4 bg-base-300 ">
+    <div to="/post/id" className=" p-7 rounded shadow-xs mb-4 bg-base-300 ">
       {/* Author Info */}
       <div className="flex items-center gap-2 mb-5">
         <img
@@ -44,7 +45,7 @@ const PostCard = ({ post }) => {
         {/* Comments */}
         <span className="flex items-center gap-1">
           <GoComment />
-          {post.commentsCount || 0}
+          {post.comment || 0}
         </span>
 
         {/* Total Votes */}

@@ -1,9 +1,13 @@
 import React from "react";
+import Lottie from "lottie-react";
+import animation from "../../assets/Animation/loading.json";
 
 const Loading = () => {
   return (
     <div className="flex justify-center items-center py-10">
-      <div className="animate-spin rounded-full h-10 w-10 border-t-4 border-blue-500 border-opacity-50"></div>
+      <div className="w-28 h-28">
+        <Lottie animationData={animation} loop={true} autoplay={true} />
+      </div>
     </div>
   );
 };
