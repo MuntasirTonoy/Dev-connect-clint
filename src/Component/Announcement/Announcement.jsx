@@ -1,56 +1,80 @@
 import React from "react";
 
-// Example announcements data (you can replace this with your props or API data)
-const dummyAnnouncements = [
-  { id: 1, text: "lorem ", postedAt: "2025-07-08T10:00:00Z" },
-  { id: 2, text: "Announcement 2", postedAt: "2025-07-09T12:00:00Z" },
-  { id: 3, text: "Announcement 3", postedAt: "2025-07-09T14:00:00Z" },
+// Dummy announcements with author data
+const announcements = [
+  {
+    title: "New features and updates",
+    message:
+      "Check out the latest improvements and changes to the platform. Go check it out!",
+    postedAt: "2025-07-09T10:30:00Z",
+    author: {
+      name: "John Developer",
+      image: "https://i.pravatar.cc/100?img=5", // Replace with real image
+    },
+  },
+  {
+    title: "Community Meetup",
+    message:
+      "Join our virtual meetup on Friday at 7PM (GMT+6). There will be some important guests.",
+    postedAt: "2025-07-07T18:00:00Z",
+    author: {
+      name: "Muntasir Tonoy",
+      image: "https://i.pravatar.cc/100?img=15",
+    },
+  },
 ];
 
-const Announcement = ({ announcements = dummyAnnouncements }) => {
-  if (!announcements || announcements.length === 0) {
-    // No announcements to show
-    return null;
-  }
+const Announcement = () => {
+  if (!announcements || announcements.length === 0) return null;
 
-  // Sort announcements by postedAt descending (latest first)
-  const latestAnnouncement = announcements
-    .slice() // copy to avoid mutation
-    .sort((a, b) => new Date(b.postedAt) - new Date(a.postedAt))[0];
+  // Sort announcements by latest date
+  const sorted = [...announcements].sort(
+    (a, b) => new Date(b.postedAt) - new Date(a.postedAt)
+  );
+
+  const latest = sorted[0];
+  const formattedDate = new Date(latest.postedAt).toLocaleString("en-US", {
+    dateStyle: "long",
+    timeStyle: "short",
+  });
 
   return (
-    <section className="announcement-section p-6 max-w-md mx-auto bg-white rounded-lg shadow-md border border-gray-200">
-      <div className="flex items-center mb-4">
-        <svg
-          className="w-6 h-6 text-blue-500 mr-2"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M13 16h-1v-4h-1m1-4h.01M12 12h.01"
-          ></path>
-          <circle
-            cx="12"
-            cy="12"
-            r="10"
-            stroke="currentColor"
-            strokeWidth="2"
-            fill="none"
-          />
-        </svg>
-        <h2 className="text-2xl font-bold text-gray-900">Announcement</h2>
-      </div>
-      <p className="text-gray-700 text-lg mb-3">{latestAnnouncement.text}</p>
-      <div className="text-sm text-gray-500 border-t pt-2">
-        <time dateTime={latestAnnouncement.postedAt} className="block">
-          Posted at: {new Date(latestAnnouncement.postedAt).toUTCString()}
-        </time>
+    <section className="py-10 bg-base-100">
+      <div className="max-w-4xl mx-auto px-4">
+        <div className="bg-base-200 rounded-xl p-6 shadow-xs border border-base-300">
+          {/* Section Title */}
+          <h2 className="text-3xl font-bold mb-8 text-base-content">
+            Announcements
+          </h2>
+
+          {/* Announcement Card */}
+          <div className="space-y-3">
+            {/* Author Info */}
+            <div className="flex items-center gap-4">
+              <img
+                src={latest.author.image}
+                alt={latest.author.name}
+                className="w-12 h-12 rounded-full object-cover border-2 border-base-content"
+              />
+              <div>
+                <p className="font-semibold text-base-content">
+                  {latest.author.name}
+                </p>
+                <p className="text-xs text-base-content/70">
+                  Posted on {formattedDate}
+                </p>
+              </div>
+            </div>
+
+            {/* Title and Message */}
+            <div>
+              <h3 className="text-xl font-semibold text-base-content mb-1">
+                {latest.title}
+              </h3>
+              <p className="text-base text-base-content">{latest.message}</p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

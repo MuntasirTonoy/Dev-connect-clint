@@ -89,13 +89,13 @@ const Search = () => {
   return (
     <div className="space-y-10">
       {/* Search Input */}
-      <div className="flex items-center bg-base-100 rounded-md overflow-hidden shadow-md">
+      <div className="flex items-center bg-base-100 rounded-md focus:ring-2  overflow-hidden shadow-md">
         <input
           type="text"
           placeholder="Search..."
-          className="w-full px-4 py-2 outline-none text-gray-700"
+          className="w-full px-4 py-1 outline-none text-base-content"
         />
-        <button className="bg-base-content text-white px-4 py-2 ">
+        <button className="bg-base-content text-base-100 rounded-md px-4 py-2 m-2 ">
           Search
         </button>
       </div>

@@ -33,7 +33,7 @@ const Navbar = () => {
           {/* Logo and Site Name - Left Side */}
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <img className="h-10 w-8" src={siteLogo} alt="Logo" />
+              <img className=" w-5" src={siteLogo} alt="Logo" />
             </div>
             <span className="ml-2 text-lg font-extrabold text-base-content">
               Dev Connect
