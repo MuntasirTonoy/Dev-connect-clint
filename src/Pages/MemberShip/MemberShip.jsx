@@ -22,7 +22,7 @@ const Membership = () => {
   return (
     <section className="max-w-7xl mx-auto px-4 py-12 grid md:grid-cols-3 gap-8">
       {/* Left Column: User Info + Price */}
-      <div className="md:col-span-1 bg-base-100 rounded-xl shadow p-6 flex flex-col gap-6">
+      <div className="md:col-span-1 bg-base-200 rounded-xl shadow p-6 flex flex-col gap-6">
         <div className="flex flex-col items-center text-center gap-4">
           <img
             src={avatar}
@@ -33,21 +33,23 @@ const Membership = () => {
             <h2 className="text-xl font-bold text-base-content">
               {user?.displayName || "Muntasir Tonoy"}
             </h2>
-            <p className="text-sm text-gray-500">{user?.email}</p>
+            <p className="text-sm text-base-content">{user?.email}</p>
           </div>
-          <div className="text-sm text-gray-600 space-y-1">
-            <p>📞 +880 1234-567890</p>
-            <p>📍 Dhaka, Bangladesh</p>
+          <div className="text-sm text-base-content space-y-1">
+            <p> +880 1234-567890</p>
+            <p> Dhaka, Bangladesh</p>
           </div>
         </div>
 
         {/* Price Card */}
-        <div className="bg-white p-4 rounded-xl shadow border">
+        <div className="bg-base-300 p-4 rounded-xl shadow border">
           <h3 className="text-2xl font-bold text-base-content mb-2">
             ৳499 / $5
           </h3>
-          <p className="text-gray-600 text-sm mb-4">One-time membership fee</p>
-          <ul className="space-y-2 text-sm text-gray-700">
+          <p className="text-base-content text-sm mb-4">
+            One-time membership fee
+          </p>
+          <ul className="space-y-2 text-sm text-base-content">
             <li className="flex items-center gap-2">
               <IoMdDoneAll className="text-green-500" /> Premium Access
             </li>
@@ -62,7 +64,7 @@ const Membership = () => {
       </div>
 
       {/* Right Column: Payment Form */}
-      <div className="md:col-span-2 bg-base-100 rounded-xl shadow p-8">
+      <div className="md:col-span-2 bg-base-200 rounded-xl shadow p-8">
         <h2 className="text-2xl font-bold text-base-content mb-6">
           Complete Your Payment
         </h2>
@@ -87,10 +89,10 @@ const Membership = () => {
             ].map((item) => (
               <label
                 key={item.value}
-                className={`flex items-center gap-2 px-3 py-2 border rounded-lg cursor-pointer ${
+                className={`flex items-center gap-2 px-3 py-2 border rounded-md cursor-pointer ${
                   method === item.value
-                    ? "bg-base-content text-white"
-                    : "bg-gray-100"
+                    ? "bg-base-content text-base-100"
+                    : "bg-base-100"
                 }`}
               >
                 <input
@@ -127,7 +129,7 @@ const Membership = () => {
                 })}
                 type="text"
                 placeholder="01XXXXXXXXX"
-                className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               {errors.bkash && (
                 <p className="text-red-500 text-sm mt-1">
@@ -147,7 +149,7 @@ const Membership = () => {
                   })}
                   type="text"
                   placeholder="1234 5678 9012 3456"
-                  className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full  rounded-md px-4 py-2 focus:outline-none bg-base-300 focus:ring-1 focus:ring-base-content"
                 />
                 {errors.cardNumber && (
                   <p className="text-red-500 text-sm mt-1">
@@ -167,7 +169,7 @@ const Membership = () => {
                     })}
                     type="text"
                     placeholder="MM/YY"
-                    className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full rounded-md px-4 py-2 focus:outline-none bg-base-300 focus:ring-1 focus:ring-base-content"
                   />
                   {errors.expiry && (
                     <p className="text-red-500 text-sm mt-1">
@@ -181,7 +183,7 @@ const Membership = () => {
                     {...register("cvv", { required: "CVV is required" })}
                     type="password"
                     placeholder="•••"
-                    className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full  rounded-md px-4 py-2 focus:outline-none bg-base-300 focus:ring-1 focus:ring-base-content"
                   />
                   {errors.cvv && (
                     <p className="text-red-500 text-sm mt-1">
@@ -201,7 +203,7 @@ const Membership = () => {
                   })}
                   type="text"
                   placeholder="Muntasir Tonoy"
-                  className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full  rounded-md px-4 py-2 focus:outline-none bg-base-300 focus:ring-1 focus:ring-base-content"
                 />
                 {errors.cardName && (
                   <p className="text-red-500 text-sm mt-1">
@@ -214,9 +216,9 @@ const Membership = () => {
 
           <button
             type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition duration-200 mt-2"
+            className="w-full bg-base-content hover:opacity-90 text-base-100 font-semibold py-3 rounded-md transition duration-200 mt-2"
           >
-            Pay ৳499 / $5
+            Pay
           </button>
         </form>
       </div>
