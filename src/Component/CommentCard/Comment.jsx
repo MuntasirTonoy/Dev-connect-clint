@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const Comments = ({ user }) => {
+const CommentCard = ({ user }) => {
   const [comments, setComments] = useState([]);
   const [commentInput, setCommentInput] = useState("");
   const avatarUrl = "https://shorturl.at/WUkZ2";
@@ -87,4 +87,4 @@ const Comments = ({ user }) => {
   );
 };
 
-export default Comments;
+export default CommentCard;

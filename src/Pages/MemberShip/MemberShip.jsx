@@ -67,10 +67,10 @@ const Membership = () => {
               <IoMdDoneAll className="text-green-500" /> Premium Access
             </li>
             <li className="flex items-center gap-2">
-              <IoMdDoneAll className="text-green-500" /> Member-only Content
+              <IoMdDoneAll className="text-green-500" /> Get Golden Badge
             </li>
             <li className="flex items-center gap-2">
-              <IoMdDoneAll className="text-green-500" /> Priority Support
+              <IoMdDoneAll className="text-green-500" /> 5 Extra Posts
             </li>
           </ul>
         </div>

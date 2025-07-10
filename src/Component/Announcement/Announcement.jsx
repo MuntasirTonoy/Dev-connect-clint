@@ -26,7 +26,11 @@ const Announcement = () => {
   });
 
   return (
-    <section data-aos="fade-up" className="bg-base-100  p-3">
+    <section
+      data-aos="fade-up"
+      data-aos-duration="300"
+      className="bg-base-100  p-3"
+    >
       <div className="max-w-4xl mx-auto">
         <div className="bg-base-200 rounded-xl md:px-10 px-5 md:py-15 py-7 shadow-xs border border-base-300">
           <h2 className="text-4xl font-bold mb-10 text-base-content">

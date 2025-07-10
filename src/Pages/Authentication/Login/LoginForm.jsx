@@ -4,7 +4,7 @@ import { AuthContext } from "../../../Firebase/AuthContext";
 import { FcGoogle } from "react-icons/fc";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 const LoginForm = () => {
   const { user, signIn, signInWithGoogle } = useContext(AuthContext);
@@ -14,7 +14,9 @@ const LoginForm = () => {
     formState: { errors },
   } = useForm();
   const [showPassword, setShowPassword] = useState(false);
+
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogin = async (data) => {
     try {
@@ -26,7 +28,7 @@ const LoginForm = () => {
         showConfirmButton: false,
         timer: 2000,
       });
-      navigate("/");
+      navigate(`${location?.state ? location.state : "/"}`);
       console.log(user);
     } catch (error) {
       console.error("Login error:", error.message);
@@ -52,7 +54,7 @@ const LoginForm = () => {
         showConfirmButton: false,
         timer: 2000,
       });
-      navigate("/");
+      navigate(`${location?.state ? location.state : "/"}`);
     } catch (error) {
       console.error("Google login error:", error);
       Swal.fire({

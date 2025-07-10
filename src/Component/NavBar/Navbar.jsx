@@ -3,8 +3,8 @@ import { NavLink } from "react-router";
 import siteLogo from "../../assets/Images/logo.png";
 import { AuthContext } from "../../Firebase/AuthContext";
 import { FiLogOut } from "react-icons/fi";
-import Notification from "../Notification/Notification";
 import { LiaLongArrowAltRightSolid } from "react-icons/lia";
+import NotificationButton from "../Notification/NotificationButon";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -16,7 +16,10 @@ const Navbar = () => {
   };
 
   return (
-    <nav data-aos="fade-down" className="bg-base-200 shadow-xs mb-10">
+    <nav
+      data-aos="fade-down"
+      className="bg-base-200 shadow-xs mb-10 relative z-50 "
+    >
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -42,7 +45,7 @@ const Navbar = () => {
               Membership
             </NavLink>
 
-            {user && <Notification />}
+            {user && <NotificationButton />}
 
             {!user && (
               <NavLink
@@ -55,7 +58,7 @@ const Navbar = () => {
 
             {/* Profile Dropdown (desktop) */}
             {user && (
-              <div className="dropdown dropdown-end">
+              <div className="dropdown dropdown-end  ">
                 <div
                   tabIndex={0}
                   role="button"
@@ -67,7 +70,7 @@ const Navbar = () => {
                 </div>
                 <ul
                   tabIndex={0}
-                  className="mt-3 z-[1] p-2 font-semibold shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+                  className="mt-3 z-10 p-2 font-semibold shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
                 >
                   <li className="mb-2">
                     <p className="text-sm font-semibold text-base-content">
@@ -92,8 +95,8 @@ const Navbar = () => {
 
           {/* Mobile menu toggle */}
           <div className="md:hidden flex items-center gap-3">
-            <Notification />
-            <div className="dropdown dropdown-end">
+            <NotificationButton />
+            <div className="dropdown dropdown-end ">
               <div
                 tabIndex={0}
                 role="button"
@@ -117,7 +120,7 @@ const Navbar = () => {
 
               <ul
                 tabIndex={0}
-                className="menu menu-sm font-semibold dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+                className="menu menu-sm font-semibold dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52  z-10"
               >
                 {user && (
                   <>

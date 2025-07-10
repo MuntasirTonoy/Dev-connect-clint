@@ -9,6 +9,8 @@ import MyProfile from "../Component/MyProfile/MyProfile";
 import AddPost from "../Component/AddPost/AddPost";
 import MyPosts from "../Component/MyPost/MyPost";
 import DashBoard from "../Pages/DashBoard/DashBoard";
+import PrivateRoute from "../Private/PrivateRoute";
+import Notifications from "../Component/Notification/Notifications";
 
 const router = createBrowserRouter([
   {
@@ -18,15 +20,36 @@ const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
       {
         path: "/membership",
-        element: <MemberShip />,
+        element: (
+          <PrivateRoute>
+            <MemberShip />
+          </PrivateRoute>
+        ),
       },
       {
-        path: "/post/id",
-        element: <PostDetails />,
+        path: "/notifications",
+        element: (
+          <PrivateRoute>
+            <Notifications />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/post/:id",
+        element: (
+          <PrivateRoute>
+            <PostDetails />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard",
-        element: <DashBoard />,
+        element: (
+          <PrivateRoute>
+            <DashBoard />
+          </PrivateRoute>
+        ),
+
         children: [
           { index: true, element: <MyProfile /> },
           { path: "add-post", element: <AddPost /> },

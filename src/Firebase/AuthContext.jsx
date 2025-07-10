@@ -9,6 +9,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "./firebase.init";
+import { saveUserIfNew } from "../Hoocks/Api";
 
 export const AuthContext = createContext(null);
 
@@ -104,10 +105,22 @@ const AuthProvider = ({ children }) => {
 
   // Observer for user state changes
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
-
       setLoading(false);
+
+      // ✅ Save user if new
+      if (currentUser && currentUser.email) {
+        try {
+          await saveUserIfNew({
+            name: currentUser.displayName,
+            email: currentUser.email,
+            photoURL: currentUser.photoURL,
+          });
+        } catch (err) {
+          console.error("Error saving user:", err.message);
+        }
+      }
     });
 
     return () => unsubscribe();

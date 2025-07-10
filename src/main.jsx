@@ -7,20 +7,25 @@ import router from "./Routes/Router";
 import AuthProvider from "./Firebase/AuthContext";
 import { Toaster } from "react-hot-toast";
 import Aos from "aos";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 Aos.init({
   offset: 120, // Offset (in px) from the original trigger point
-  delay: 400, // Delay in ms
+  delay: 300, // Delay in ms
   duration: 700, // Animation duration in ms
   easing: "ease", // Default easing for animations
   once: false, // ❗ Animation will trigger every time you scroll into view
   mirror: true,
 });
 
+const queryClient = new QueryClient();
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
-    <Toaster />
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+      <Toaster />
+    </QueryClientProvider>
   </StrictMode>
 );

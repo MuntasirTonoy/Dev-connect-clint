@@ -4,7 +4,7 @@ import axios from "axios";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { MdOutlineNotificationsNone } from "react-icons/md";
 
-const Notification = () => {
+const NotificationButton = () => {
   const [announcementCount, setAnnouncementCount] = useState(0);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ const Notification = () => {
   return (
     <div className="relative">
       <NavLink
-        to="/e"
+        to="/notifications"
         className={({ isActive }) =>
           `p-2 rounded-full text-md font-medium hover:bg-base-content hover:text-base-100 flex items-center ${
             isActive ? "active" : ""
@@ -42,4 +42,4 @@ const Notification = () => {
   );
 };
 
-export default Notification;
+export default NotificationButton;
