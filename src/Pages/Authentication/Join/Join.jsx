@@ -9,11 +9,14 @@ const Join = () => {
 
   return (
     <div className="min-h-screen bg-base-300 flex items-center justify-center p-4">
-      <div className="bg-base-200 shadow-sm border-1  border-neutral/50 rounded-xl w-full max-w-md">
+      <div
+        data-aos="flip-up"
+        className="bg-base-200 shadow-sm border-1  border-neutral/50 rounded-xl w-full max-w-md"
+      >
         {/* Branding */}
         <div className="flex items-center justify-center py-6 mb-6 space-x-2">
           <img src={logo} alt="Dev Connect Logo" className="w-10 h-10" />
-          <h1 className="text-2xl texy-base-content font-bold">Dev Connect</h1>
+          <h1 className="text-2xl text-base-content font-bold">Dev Connect</h1>
         </div>
 
         {/* Custom Daisy-style Tabs */}

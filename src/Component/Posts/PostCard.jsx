@@ -9,7 +9,12 @@ const PostCard = ({ post }) => {
   const timeAgo = dayjs(post.timeOfPost).fromNow();
 
   return (
-    <div to="/post/id" className=" p-7 rounded shadow-xs mb-4 bg-base-300 ">
+    <div
+      data-aos="zoom-out"
+      data-aos-duration="300"
+      data-aos-delay="100"
+      className=" p-7 rounded shadow-xs mb-4 bg-base-300 "
+    >
       {/* Author Info */}
       <div className="flex items-center gap-2 mb-5">
         <img
@@ -25,7 +30,7 @@ const PostCard = ({ post }) => {
 
       {/* Title and Content */}
       <div>
-        <h2 className="text-2xl line-clamp-1 font-bold mb-2">
+        <h2 className="text-xl md:text-2xl  line-clamp-1 font-semibold md:font-bold mb-2">
           {post.postTitle}
         </h2>
         <p className="mb-2 line-clamp-3">{post.post}</p>

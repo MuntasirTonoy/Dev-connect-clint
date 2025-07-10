@@ -12,7 +12,11 @@ const MyProfile = () => {
   ];
 
   return (
-    <div className="card bg-base-200 p-6 space-y-4 text-base-content">
+    <div
+      data-aos="fade-up"
+      data-aos-delay="100"
+      className="card bg-base-200 p-6 space-y-4 text-base-content"
+    >
       <div className="flex items-center gap-4">
         <img
           src={user?.photoURL || "https://shorturl.at/WUkZ2"}

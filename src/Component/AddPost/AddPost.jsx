@@ -29,7 +29,11 @@ const AddPost = () => {
   ];
 
   return (
-    <div className="card bg-base-200 p-6 space-y-4 text-base-content">
+    <div
+      data-aos="fade-up"
+      data-aos-delay="100"
+      className="card bg-base-200 p-6 space-y-4 text-base-content"
+    >
       <h2 className="text-xl font-bold mb-4">Add New Post</h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

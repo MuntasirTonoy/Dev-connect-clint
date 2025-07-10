@@ -87,7 +87,7 @@ const popularSearches = [
 
 const Search = () => {
   return (
-    <div className="space-y-10">
+    <div data-aos="fade-down" data-aos-delay="700" className="space-y-10">
       {/* Search Input */}
       <div className="flex items-center bg-base-100 rounded-md focus:ring-2  overflow-hidden shadow-md">
         <input

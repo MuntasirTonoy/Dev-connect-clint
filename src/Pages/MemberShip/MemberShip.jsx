@@ -22,8 +22,16 @@ const Membership = () => {
   return (
     <section className="max-w-7xl mx-auto px-4 py-12 grid md:grid-cols-3 gap-8">
       {/* Left Column: User Info + Price */}
-      <div className="md:col-span-1 bg-base-200 rounded-xl shadow p-6 flex flex-col gap-6">
-        <div className="flex flex-col items-center text-center gap-4">
+      <div
+        data-aos="fade-right"
+        className="md:col-span-1 bg-base-200 rounded-xl shadow p-6 flex flex-col gap-6"
+      >
+        <div
+          data-aos="fade-up"
+          data-aos-duration="600"
+          data-aos-delay="900"
+          className="flex flex-col items-center text-center gap-4"
+        >
           <img
             src={avatar}
             alt="User"
@@ -42,7 +50,12 @@ const Membership = () => {
         </div>
 
         {/* Price Card */}
-        <div className="bg-base-300 p-4 rounded-xl shadow border">
+        <div
+          data-aos="fade-up"
+          data-aos-duration="600"
+          data-aos-delay="1000"
+          className="bg-base-300 p-4 rounded-xl shadow border"
+        >
           <h3 className="text-2xl font-bold text-base-content mb-2">
             ৳499 / $5
           </h3>
@@ -64,7 +77,10 @@ const Membership = () => {
       </div>
 
       {/* Right Column: Payment Form */}
-      <div className="md:col-span-2 bg-base-200 rounded-xl shadow p-8">
+      <div
+        data-aos="fade-left"
+        className="md:col-span-2 bg-base-200 rounded-xl shadow p-8"
+      >
         <h2 className="text-2xl font-bold text-base-content mb-6">
           Complete Your Payment
         </h2>
