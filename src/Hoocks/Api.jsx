@@ -43,3 +43,9 @@ export const saveUserIfNew = async (userData) => {
   const res = await api.put("/users", userData);
   return res.data;
 };
+
+// announcements API
+export const fetchAnnouncements = async () => {
+  const response = await api.get("/announcements");
+  return response.data;
+};

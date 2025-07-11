@@ -1,11 +1,11 @@
 import React from "react";
-import Announcement from "../Announcement/Announcement";
+import Announcements from "../Announcement/Announcements";
 
 const Notifications = () => {
   return (
     <div>
       <div className="my-10">
-        <Announcement />
+        <Announcements />
       </div>
     </div>
   );
