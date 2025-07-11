@@ -1,20 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useForm, Controller } from "react-hook-form";
 import Select from "react-select";
-import { createPost } from "../../Hoocks/Api";
 import Swal from "sweetalert2";
-import { useContext } from "react";
+import { createPost, fetchTags } from "../../Hoocks/Api";
 import { AuthContext } from "../../Firebase/AuthContext";
+import { useQuery } from "@tanstack/react-query";
 
 const AddPost = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { user } = useContext(AuthContext);
-  const { register, handleSubmit, control, reset } = useForm();
+
+  const { data: tagOptions } = useQuery({
+    queryKey: ["tags"],
+    queryFn: fetchTags,
+  });
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    reset,
+    getValues,
+    trigger,
+    formState: { errors },
+  } = useForm();
+
   const onSubmit = async (data) => {
     const tags = data.tag ? data.tag.map((t) => t.value) : [];
+
+    // Validate tag length manually
+    if (!tags.length) {
+      return Swal.fire({
+        icon: "error",
+        title: "Tag Required",
+        text: "Please select at least one tag.",
+      });
+    }
+
     const post = {
       ...data,
-
       author: user?.displayName || "Anonymous",
       authorEmail: user?.email || "Anonymous",
       authorPhoto: user?.photoURL || "https://via.placeholder.com/150",
@@ -23,7 +47,6 @@ const AddPost = () => {
       downVote: [],
       timeOfPost: new Date().toISOString(),
     };
-    console.log(post);
 
     setIsSubmitting(true);
     try {
@@ -33,7 +56,7 @@ const AddPost = () => {
         title: "Post Added!",
         text: "Your post has been created successfully.",
       });
-      reset(); // Clear the form
+      reset();
     } catch (error) {
       console.error("Error adding post:", error);
       Swal.fire({
@@ -45,33 +68,31 @@ const AddPost = () => {
       setIsSubmitting(false);
     }
   };
-  const tagOptions = [
-    { value: "", label: "Select a tag" },
-    { value: "Node", label: "Node" },
-    { value: "JavaScript", label: "JavaScript" },
-    { value: "Backend", label: "Backend" },
-    { value: "React", label: "React" },
-    { value: "Frontend", label: "Frontend" },
-    { value: "Database", label: "Database" },
-    { value: "NoSQL", label: "NoSQL" },
-    { value: "Express", label: "Express" },
-    { value: "API", label: "API" },
-    { value: "CSS", label: "CSS" },
-    { value: "Web Design", label: "Web Design" },
-    { value: "Security", label: "Security" },
-    { value: "TypeScript", label: "TypeScript" },
-    { value: "Programming", label: "Programming" },
-    { value: "Docker", label: "Docker" },
-    { value: "DevOps", label: "DevOps" },
-    { value: "Containers", label: "Containers" },
-    { value: "GraphQL", label: "GraphQL" },
-    { value: "Patterns", label: "Patterns" },
-    { value: "Testing", label: "Testing" },
-    { value: "Best Practices", label: "Best Practices" },
-    { value: "State Management", label: "State Management" },
-    { value: "Automation", label: "Automation" },
-    { value: "Performance", label: "Performance" },
-  ];
+
+  const handleValidation = async () => {
+    const valid = await trigger();
+    const values = getValues();
+
+    if (!valid) {
+      if (errors.title) {
+        return Swal.fire("Title Error", errors.title.message, "error");
+      }
+      if (errors.description) {
+        return Swal.fire(
+          "Description Error",
+          errors.description.message,
+          "error"
+        );
+      }
+      return;
+    }
+
+    if (!values.tag || values.tag.length === 0) {
+      return Swal.fire("Tag Error", "Please select at least one tag.", "error");
+    }
+
+    handleSubmit(onSubmit)();
+  };
 
   return (
     <div
@@ -81,16 +102,27 @@ const AddPost = () => {
     >
       <h2 className="text-3xl font-bold mb-4">Add New Post</h2>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
         <input
-          {...register("title")}
+          {...register("title", {
+            required: "Title is required",
+            validate: (value) =>
+              value.trim().split(" ").length >= 1 ||
+              "Title must contain at least 1 word",
+          })}
           placeholder="Post Title"
-          className="w-full bg-base-300 p-3 rounded focus:ring-2 focus:ring-base-content"
+          className="w-full bg-base-300 text-base-content p-3 rounded focus:ring-2 focus:ring-base-content"
         />
+
         <textarea
-          {...register("description")}
+          {...register("description", {
+            required: "Description is required",
+            validate: (value) =>
+              value.trim().split(" ").length >= 10 ||
+              "Description must be at least 10 words",
+          })}
           placeholder="Post Description"
-          className="w-full bg-base-300 p-3 rounded focus:ring-2 focus:ring-base-content"
+          className="w-full bg-base-300 text-base-content p-3 rounded focus:ring-2 focus:ring-base-content"
           rows={4}
         ></textarea>
 
@@ -104,9 +136,18 @@ const AddPost = () => {
                 {...field}
                 options={tagOptions}
                 isMulti
-                className="react-select-container"
-                classNamePrefix="react-select"
                 placeholder="Select tags"
+                className="react-select-container bg-base-300 text-black"
+                classNamePrefix="react-select"
+                styles={{
+                  control: (base) => ({
+                    ...base,
+                  }),
+                  multiValueLabel: (base) => ({
+                    ...base,
+                    color: "#1f2937",
+                  }),
+                }}
                 onChange={(selected) => field.onChange(selected)}
               />
             )}
@@ -116,9 +157,10 @@ const AddPost = () => {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="bg-gray-700 hover:bg-gray-800 w-full text-white py-2 px-6 rounded"
+          onClick={handleValidation}
+          className="bg-black hover:bg-gray-800 w-full text-white py-2 px-6 rounded transition-all ease-in-out cursor-pointer"
         >
-          {isSubmitting ? "Submitting..." : " Post"}
+          {isSubmitting ? "Submitting..." : "Post"}
         </button>
       </form>
     </div>

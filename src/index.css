@@ -9,3 +9,8 @@
   background: #374151;
   color: aliceblue;
 }
+
+.dashB.active {
+  background: #000000;
+  color: aliceblue;
+}

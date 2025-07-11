@@ -15,6 +15,7 @@ import ShareModal from "../../Component/Modals/ShareModal";
 import Loading from "../../Component/Loading/Loading";
 
 const PostDetails = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
   const { id } = useParams();
   const { user } = useContext(AuthContext);
@@ -35,11 +36,15 @@ const PostDetails = () => {
 
   const handleVote = async (type) => {
     if (!user?.email) return alert("Login required to vote.");
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     try {
       await updateVote(id, user.email, type);
       refetch();
+      setIsSubmitting(false);
     } catch (err) {
       console.error("Vote failed", err);
+      setIsSubmitting(false);
     }
   };
 
@@ -108,21 +113,39 @@ const PostDetails = () => {
           {/* Upvote Button */}
           <button
             onClick={() => handleVote("upvote")}
+            disabled={isSubmitting}
             className={`p-2 rounded-full flex items-center gap-1 ${
-              upvoted ? "bg-base-content text-white" : "bg-gray-200"
+              upvoted
+                ? "bg-base-content text-base-100"
+                : "bg-base-300 text-base-content"
             }`}
           >
-            <FaArrowUp /> <span>{post.upVote?.length || 0}</span>
+            {isSubmitting ? (
+              <span className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+            ) : (
+              <>
+                <FaArrowUp /> <span>{post.upVote?.length || 0}</span>
+              </>
+            )}
           </button>
 
           {/* Downvote Button */}
           <button
             onClick={() => handleVote("downvote")}
+            disabled={isSubmitting}
             className={`p-2 rounded-full flex items-center gap-1 ${
-              downvoted ? "bg-base-content text-white" : "bg-gray-200"
+              downvoted
+                ? "bg-base-content text-base-100"
+                : "bg-base-300 text-base-content"
             }`}
           >
-            <FaArrowDown /> <span>{post.downVote?.length || 0}</span>
+            {isSubmitting ? (
+              <span className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+            ) : (
+              <>
+                <FaArrowDown /> <span>{post.downVote?.length || 0}</span>
+              </>
+            )}
           </button>
 
           {/* Comment */}

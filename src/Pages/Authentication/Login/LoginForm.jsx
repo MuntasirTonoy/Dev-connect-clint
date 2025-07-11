@@ -29,7 +29,6 @@ const LoginForm = () => {
         timer: 2000,
       });
       navigate(`${location?.state ? location.state : "/"}`);
-      console.log(user);
     } catch (error) {
       console.error("Login error:", error.message);
       Swal.fire({

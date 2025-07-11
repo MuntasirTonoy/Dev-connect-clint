@@ -1,7 +1,10 @@
 import axios from "axios";
 
+// const api = axios.create({
+//   baseURL: "https://dev-connect-server.vercel.app",
+// });
 const api = axios.create({
-  baseURL: "http://localhost:3000", // Adjust for production
+  baseURL: "http://localhost:3000",
 });
 
 // GET all posts or posts by email
@@ -47,5 +50,10 @@ export const saveUserIfNew = async (userData) => {
 // announcements API
 export const fetchAnnouncements = async () => {
   const response = await api.get("/announcements");
+  return response.data;
+};
+// tags   API
+export const fetchTags = async () => {
+  const response = await api.get("/tags");
   return response.data;
 };

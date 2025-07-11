@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import siteLogo from "../../assets/Images/logo.png";
 import { AuthContext } from "../../Firebase/AuthContext";
 import { FiLogOut } from "react-icons/fi";
@@ -8,7 +8,6 @@ import NotificationButton from "../Notification/NotificationButon";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
-  console.log(user);
 
   const handleLogOut = () => {
     logOut();
@@ -26,7 +25,7 @@ const Navbar = () => {
           <div className="flex items-center">
             <img className="w-5" src={siteLogo} alt="Logo" />
             <span className="ml-2 text-lg font-extrabold text-base-content">
-              Dev Connect
+              <Link to="/">Dev Connect</Link>
             </span>
           </div>
 

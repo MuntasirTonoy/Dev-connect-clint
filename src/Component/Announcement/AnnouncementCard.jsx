@@ -9,7 +9,7 @@ const AnnouncementCard = ({ announcement }) => {
   );
 
   return (
-    <div className="relative bg-base-200 rounded-xl md:px-10 px-5 md:py-15 py-7 shadow-xs border border-base-300">
+    <div className="relative bg-base-200 rounded-xl md:px-10 px-5 md:py-15 py-7 shadow-sm border border-base-300">
       {/* Ping animation element - only show if isLatest prop is true */}
       {announcement.isLatest && (
         <div className="absolute -right-1 -top-1 flex h-4 w-4 md:h-5 md:w-5">
@@ -33,7 +33,11 @@ const AnnouncementCard = ({ announcement }) => {
             />
             <div>
               <p className="font-semibold text-base-content">
-                {announcement.author.name}
+                {announcement.author.name} (
+                <span className="text-xs text-base-content/70">
+                  {announcement.author.role}
+                </span>
+                )
               </p>
               <p className="text-xs text-base-content/70">
                 Posted at {formattedDateTime}

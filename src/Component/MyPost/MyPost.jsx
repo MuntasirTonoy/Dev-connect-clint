@@ -19,7 +19,6 @@ const MyPosts = () => {
 
   if (isLoading) return <Loading />;
   if (isError) return <p>Error: {error.message}</p>;
-  console.log(posts);
 
   return (
     <div

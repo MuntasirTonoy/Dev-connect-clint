@@ -16,7 +16,6 @@ const PostCard = ({ post }) => {
 
   // Time ago
   const timeAgo = dayjs(post.timeOfPost).fromNow();
-  console.log(post);
 
   return (
     <div>
