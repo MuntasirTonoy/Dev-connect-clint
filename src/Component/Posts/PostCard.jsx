@@ -16,9 +16,10 @@ const PostCard = ({ post }) => {
 
   // Time ago
   const timeAgo = dayjs(post.timeOfPost).fromNow();
+  console.log(post);
 
   return (
-    <Link to={`/post/${post._id}`}>
+    <div>
       <div
         data-aos="zoom-out"
         data-aos-duration="200"
@@ -28,7 +29,7 @@ const PostCard = ({ post }) => {
         {/* Author Info */}
         <div className="flex items-center gap-2 mb-5">
           <img
-            src={post.authorPhoto}
+            src="https://cdn-icons-png.flaticon.com/512/219/219983.png"
             alt={post.authorName}
             className="w-10 h-10 rounded-full"
           />
@@ -74,7 +75,7 @@ const PostCard = ({ post }) => {
           </span>
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 

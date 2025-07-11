@@ -83,7 +83,7 @@ const Posts = () => {
       ) : (
         <>
           {displayedPosts.map((post) => (
-            <Link key={post.id} to={`/post/${post.id}`}>
+            <Link key={post._id} to={`/post/${post._id}`}>
               <PostCard post={post} />
             </Link>
           ))}

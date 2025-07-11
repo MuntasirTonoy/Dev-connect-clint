@@ -29,7 +29,6 @@ const PostDetails = () => {
     queryKey: ["post", id],
     queryFn: () => fetchPostById(id),
   });
-  console.log(post);
 
   const upvoted = post?.upVote?.includes(user?.email);
   const downvoted = post?.downVote?.includes(user?.email);
@@ -76,7 +75,7 @@ const PostDetails = () => {
         {/* Author Info */}
         <div className="flex items-center gap-4 mb-4">
           <img
-            src={post.authorImage || "https://shorturl.at/WUkZ2"}
+            src={post.authorPhoto || "https://shorturl.at/WUkZ2"}
             alt="author"
             className="rounded-full w-12 h-12"
           />
