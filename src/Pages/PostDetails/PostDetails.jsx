@@ -1,9 +1,13 @@
 import React, { useContext, useState } from "react";
-import { useParams, Link } from "react-router";
+import { Link, useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
-import { fetchPostById, updateVote } from "../..//Hoocks/Api";
+import {
+  fetchPostById,
+  updateVote,
+  fetchCommentsByPostId,
+} from "../../Hoocks/Api";
 import { AuthContext } from "../../Firebase/AuthContext";
-import CommentCard from "../../Component/CommentCard/Comment";
+
 import {
   FaRegCommentAlt,
   FaShareAlt,
@@ -13,22 +17,39 @@ import {
 import { BsArrowLeft } from "react-icons/bs";
 import ShareModal from "../../Component/Modals/ShareModal";
 import Loading from "../../Component/Loading/Loading";
+import Comments from "../../Component/Comments/Comments";
 
 const PostDetails = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showShareModal, setShowShareModal] = useState(false);
   const { id } = useParams();
   const { user } = useContext(AuthContext);
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
+
   const shareUrl = window.location.href;
 
+  // Fetch Post by ID
   const {
     data: post,
-    isLoading,
-    isError,
-    refetch,
+    isLoading: isPostLoading,
+    isError: isPostError,
+    refetch: refetchPost,
   } = useQuery({
     queryKey: ["post", id],
     queryFn: () => fetchPostById(id),
+    enabled: !!id,
+  });
+
+  // Fetch Comments by Post ID
+  const {
+    data: comments = [],
+    isLoading: isCommentsLoading,
+    isError: isCommentsError,
+    refetch: refetchComments,
+  } = useQuery({
+    queryKey: ["comments", id],
+    queryFn: () => fetchCommentsByPostId(id),
+    enabled: !!id,
   });
 
   const upvoted = post?.upVote?.includes(user?.email);
@@ -37,26 +58,24 @@ const PostDetails = () => {
   const handleVote = async (type) => {
     if (!user?.email) return alert("Login required to vote.");
     if (isSubmitting) return;
+
     setIsSubmitting(true);
     try {
       await updateVote(id, user.email, type);
-      refetch();
-      setIsSubmitting(false);
+      await refetchPost();
     } catch (err) {
       console.error("Vote failed", err);
+    } finally {
       setIsSubmitting(false);
     }
   };
 
-  if (isLoading) {
-    return <Loading />;
-  }
+  if (isPostLoading) return <Loading />;
 
-  if (isError || !post) {
+  if (isPostError || !post)
     return (
       <p className="text-center py-10 text-red-500">Error loading post.</p>
     );
-  }
 
   return (
     <section
@@ -148,9 +167,10 @@ const PostDetails = () => {
             )}
           </button>
 
-          {/* Comment */}
+          {/* Comment Count */}
           <div className="flex items-center gap-1 text-base-content text-xl">
-            <FaRegCommentAlt /> <span className="text-sm">8</span>
+            <FaRegCommentAlt />{" "}
+            <span className="text-sm">{comments.length}</span>
           </div>
 
           {/* Share Button */}
@@ -164,9 +184,20 @@ const PostDetails = () => {
         </div>
       </div>
 
-      {/* Right: Comments */}
-      <div className="max-h-[600px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 pr-2">
-        <CommentCard user={user?.displayName || "Anonymous"} />
+      {/* Right: Comment Section */}
+      <div className="md:col-span-1 md:max-h-[calc(100vh-150px)] overflow-y-auto bg-base-200 p-4 rounded-lg">
+        <h3 className="text-lg font-semibold mb-4">Comments</h3>
+        {isCommentsLoading ? (
+          <Loading />
+        ) : isCommentsError ? (
+          <p className="text-red-500">Failed to load comments.</p>
+        ) : (
+          <Comments
+            comments={comments}
+            postId={post._id}
+            onCommentAdd={refetchComments}
+          />
+        )}
       </div>
 
       {/* Share Modal */}

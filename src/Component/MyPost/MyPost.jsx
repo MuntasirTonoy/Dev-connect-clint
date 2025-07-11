@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../Firebase/AuthContext";
 import { useQuery } from "@tanstack/react-query";
-import { fetchPostsByEmail } from "../../Hoocks/Api";
+import Swal from "sweetalert2";
+import { fetchPostsByEmail, deletePost } from "../../Hoocks/Api";
 import Loading from "../Loading/Loading";
 
 const MyPosts = () => {
@@ -11,11 +12,43 @@ const MyPosts = () => {
     isLoading,
     isError,
     error,
+    refetch,
   } = useQuery({
     queryKey: ["posts", user?.email],
     queryFn: () => fetchPostsByEmail(user?.email),
-    enabled: !!user?.email, // only run if userEmail exists
+    enabled: !!user?.email,
   });
+
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This action cannot be undone!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await deletePost(id);
+          if (res.success) {
+            await Swal.fire(
+              "Deleted!",
+              "Your post has been deleted.",
+              "success"
+            );
+            await refetch(); // 🔁 Re-fetch the latest posts list
+          } else {
+            Swal.fire("Failed!", "Post not found or already deleted.", "error");
+          }
+        } catch (error) {
+          console.error(error); // log for debugging
+          Swal.fire("Error", error.message || "Something went wrong!", "error");
+        }
+      }
+    });
+  };
 
   if (isLoading) return <Loading />;
   if (isError) return <p>Error: {error.message}</p>;
@@ -28,7 +61,6 @@ const MyPosts = () => {
     >
       <h2 className="text-3xl font-bold mb-4">My Posts</h2>
 
-      {/* Table scroll only on small screens */}
       <div className="overflow-x-auto">
         {posts.length > 0 ? (
           <table className="w-full min-w-[500px] text-sm">
@@ -53,7 +85,10 @@ const MyPosts = () => {
                     </button>
                   </td>
                   <td>
-                    <button className="text-red-500 btn btn-xs hover:bg-red-500 hover:text-white">
+                    <button
+                      onClick={() => handleDelete(post._id)}
+                      className="text-red-500 btn btn-xs hover:bg-red-500 hover:text-white"
+                    >
                       Delete
                     </button>
                   </td>

@@ -32,6 +32,12 @@ export const fetchPostById = async (id) => {
   return response.data;
 };
 
+// Delete a post by ID
+export const deletePost = async (id) => {
+  const response = await api.delete(`/posts/${id}`);
+  return response.data;
+};
+
 // PATCH to update votes on a post
 export const updateVote = async (postId, userEmail, voteType) => {
   const res = await api.patch(`/posts/${postId}/vote`, {
@@ -55,5 +61,21 @@ export const fetchAnnouncements = async () => {
 // tags   API
 export const fetchTags = async () => {
   const response = await api.get("/tags");
+  return response.data;
+};
+// Add a new comment
+export const postComment = async (commentData) => {
+  const response = await api.post("/comments", commentData);
+  return response.data;
+};
+
+// Get comments by post ID
+export const fetchCommentsByPostId = async (postId) => {
+  const response = await api.get(`/comments/${postId}`);
+  return response.data;
+};
+// DELETE comment by ID
+export const deleteCommentById = async (id) => {
+  const response = await api.delete(`/comments/${id}`);
   return response.data;
 };
