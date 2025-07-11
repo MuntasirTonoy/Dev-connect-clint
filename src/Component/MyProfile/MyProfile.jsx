@@ -32,7 +32,7 @@ const MyProfile = () => {
       <div>
         <div className="flex items-center gap-4">
           <img
-            src="https://cdn-icons-png.flaticon.com/512/219/219983.png"
+            src={user?.photoURL || "https://via.placeholder.com/150"}
             alt="user"
             className="w-16 h-16 rounded-full"
           />

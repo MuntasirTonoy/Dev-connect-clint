@@ -74,7 +74,7 @@ const Comments = ({ comments = [], postId, onCommentAdd }) => {
       </div>
 
       {/* Scrollable Comments List */}
-      <div className="flex-1 overflow-y-auto pr-1 space-y-4 scrollbar-thin scrollbar-thumb-gray-300">
+      <div className="flex-1  pr-1 space-y-4 scrollbar-thin scrollbar-thumb-gray-300">
         {comments.length === 0 ? (
           <p className="text-gray-500 text-sm text-center">No comments yet.</p>
         ) : (
@@ -107,7 +107,7 @@ const Comments = ({ comments = [], postId, onCommentAdd }) => {
                   <p className="mt-1 text-base-content">{comment.message}</p>
 
                   {/* Show delete only if comment made by logged-in user */}
-                  {user?.displayName === comment.name && (
+                  {user?.email === comment.email && (
                     <button
                       onClick={() => handleDelete(comment._id)}
                       className="text-sm text-red-500 hover:underline mt-2"

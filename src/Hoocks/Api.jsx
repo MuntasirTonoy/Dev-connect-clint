@@ -1,11 +1,11 @@
 import axios from "axios";
 
-// const api = axios.create({
-//   baseURL: "https://dev-connect-server.vercel.app",
-// });
 const api = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://dev-connect-server.vercel.app",
 });
+// const api = axios.create({
+//   baseURL: "http://localhost:3000",
+// });
 
 // GET all posts or posts by email
 export const fetchPosts = async () => {
