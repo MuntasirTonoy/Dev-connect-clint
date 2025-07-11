@@ -64,30 +64,6 @@ To build a fully responsive forum that showcases core full-stack development ski
 
 ---
 
-## 📁 Pages & Routes
-
-### 🔓 Public
-
-- `/` – Home with all posts + tags + search
-- `/post/:id` – Post Details + Comments + Share
-- `/membership` – Payment to unlock premium
-- `/join` – Login/Register with Firebase
-
-### 🔐 Authenticated Users
-
-- `/dashboard/profile` – My Profile + badges + About Me
-- `/dashboard/add-post` – Add Post (limit check)
-- `/dashboard/my-posts` – View/Edit/Delete/Report Comments
-
-### 🛡️ Admin Only
-
-- `/admin/manage-users` – Search, make admin
-- `/admin/announcements` – Create announcements
-- `/admin/reports` – Manage reported comments
-- `/admin/profile` – Admin stats + tag manager
-
----
-
 ## 🛠️ Getting Started
 
 ### 🧬 Clone & Install
