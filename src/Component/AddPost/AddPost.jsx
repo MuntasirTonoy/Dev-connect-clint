@@ -107,7 +107,8 @@ const AddPost = () => {
       <div className="card bg-base-200 p-6 text-center text-base-content space-y-6">
         <h2 className="text-3xl font-bold">Post Limit Reached</h2>
         <p className="text-lg">
-          You have reached the maximum of 5 posts for unpaid users.
+          You have reached the maximum of <strong>5</strong> posts for unpaid
+          users.
           <br />
           Please become a member to add more posts.
         </p>

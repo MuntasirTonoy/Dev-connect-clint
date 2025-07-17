@@ -15,7 +15,7 @@ const MyProfile = () => {
       <div>
         <div className="flex flex-col items-center gap-2">
           <img
-            src="https://www.shareicon.net/data/2016/09/15/829466_man_512x512.png"
+            src={userInfo?.photoURL || "https://via.placeholder.com/150"}
             alt="user"
             className="w-16 h-16 rounded-full"
           />
@@ -50,13 +50,17 @@ const MyProfile = () => {
       {/* Recent Posts */}
       <div>
         <h3 className="text-3xl font-bold mb-2">Recent Posts</h3>
-        <ul className="space-y-1">
-          {posts.map((post, idx) => (
-            <li key={idx} className="p-2 rounded bg-base-300  text-sm ">
-              {post.title}
-            </li>
-          ))}
-        </ul>
+        {posts.length > 0 ? (
+          <ul className="list-disc pl-5">
+            {posts.slice(0, 5).map((post) => (
+              <li key={post._id} className="text-sm mb-1">
+                {post.title}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-sm">No recent posts found.</p>
+        )}
       </div>
     </div>
   );

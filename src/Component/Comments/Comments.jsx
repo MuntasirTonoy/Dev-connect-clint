@@ -26,7 +26,6 @@ const Comments = ({ comments = [], postId, onCommentAdd }) => {
       postId,
       feedback,
     };
-    console.log(user, commentObj);
 
     try {
       await postComment(commentObj);

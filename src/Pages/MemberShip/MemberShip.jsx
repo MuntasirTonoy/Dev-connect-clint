@@ -2,10 +2,22 @@ import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../Firebase/AuthContext";
 import { IoMdDoneAll } from "react-icons/io";
+import { useQuery } from "@tanstack/react-query";
+import { fetchUserByEmail } from "../../Hoocks/Api";
 
 const Membership = () => {
   const { user } = useContext(AuthContext);
   const [method, setMethod] = useState("visa");
+  const {
+    data: userInfo,
+    isLoading: userLoading,
+    isError: userError,
+    error: userErrObj,
+  } = useQuery({
+    queryKey: ["user", user?.email],
+    queryFn: () => fetchUserByEmail(user?.email),
+    enabled: !!user?.email,
+  });
 
   const {
     register,
@@ -39,13 +51,15 @@ const Membership = () => {
           />
           <div>
             <h2 className="text-xl font-bold text-base-content">
-              {user?.displayName || "Muntasir Tonoy"}
+              {userInfo?.displayName || "Muntasir Tonoy"}
             </h2>
-            <p className="text-sm text-base-content">{user?.email}</p>
+            <p className="text-sm text-base-content">{userInfo?.email}</p>
           </div>
           <div className="text-sm text-base-content space-y-1">
-            <p> +880 1234-567890</p>
-            <p> Dhaka, Bangladesh</p>
+            <p className="bg-primary p-2 rounded-full">
+              {" "}
+              {userInfo?.paymentStatus}
+            </p>
           </div>
         </div>
 

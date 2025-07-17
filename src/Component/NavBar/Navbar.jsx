@@ -69,10 +69,10 @@ const Navbar = () => {
                 </div>
                 <ul
                   tabIndex={0}
-                  className="mt-3 z-10 p-2 font-semibold shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+                  className="mt-3  z-10 p-2 font-semibold shadow menu  dropdown-content bg-base-100 rounded-box w-52"
                 >
                   <li className="mb-2">
-                    <p className="text-sm font-semibold text-base-content">
+                    <p className="text-lg font-semibold text-base-content">
                       {user.displayName}
                     </p>
                   </li>
