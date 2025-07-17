@@ -9,8 +9,11 @@ const Comments = ({ comments = [], postId, onCommentAdd }) => {
   const [newComment, setNewComment] = useState("");
 
   const handleCommentSubmit = async () => {
-    if (!user?.email || !newComment.trim()) {
-      return Swal.fire("Error", "Login and message required", "error");
+    if (!user?.email) {
+      return Swal.fire("Error", "Please login to comment", "error");
+    }
+    if (!newComment.trim()) {
+      return Swal.fire("Error", "Comment is empty", "error");
     }
 
     const commentObj = {

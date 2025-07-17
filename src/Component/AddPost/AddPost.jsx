@@ -3,12 +3,14 @@ import { useForm, Controller } from "react-hook-form";
 import Select from "react-select";
 import Swal from "sweetalert2";
 import { createPost, fetchTags } from "../../Hoocks/Api";
-import { AuthContext } from "../../Firebase/AuthContext";
+import { useNavigate } from "react-router";
 import { useQuery } from "@tanstack/react-query";
+import { DashboardContext } from "../../Pages/Dashboard/DashBoard";
 
 const AddPost = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { user } = useContext(AuthContext);
+  const { posts, userInfo, postRefetch } = useContext(DashboardContext);
+  const navigate = useNavigate();
 
   const { data: tagOptions } = useQuery({
     queryKey: ["tags"],
@@ -25,10 +27,14 @@ const AddPost = () => {
     formState: { errors },
   } = useForm();
 
+  // Count posts made by user
+  const userPostCount = posts?.length || 0;
+  const isUnpaidAndExceeded =
+    userInfo?.paymentStatus === "unpaid" && userPostCount >= 5;
+
   const onSubmit = async (data) => {
     const tags = data.tag ? data.tag.map((t) => t.value) : [];
 
-    // Validate tag length manually
     if (!tags.length) {
       return Swal.fire({
         icon: "error",
@@ -39,9 +45,9 @@ const AddPost = () => {
 
     const post = {
       ...data,
-      author: user?.displayName || "Anonymous",
-      authorEmail: user?.email || "Anonymous",
-      authorPhoto: user?.photoURL || "https://via.placeholder.com/150",
+      author: userInfo?.displayName || "Anonymous",
+      authorEmail: userInfo?.email || "Anonymous",
+      authorPhoto: userInfo?.photoURL || "https://via.placeholder.com/150",
       tag: tags,
       upVote: [],
       downVote: [],
@@ -66,6 +72,8 @@ const AddPost = () => {
       });
     } finally {
       setIsSubmitting(false);
+      postRefetch(); // Re-fetch posts after adding a new one
+      navigate("/dashboard/my-posts");
     }
   };
 
@@ -94,6 +102,26 @@ const AddPost = () => {
     handleSubmit(onSubmit)();
   };
 
+  if (isUnpaidAndExceeded) {
+    return (
+      <div className="card bg-base-200 p-6 text-center text-base-content space-y-6">
+        <h2 className="text-3xl font-bold">Post Limit Reached</h2>
+        <p className="text-lg">
+          You have reached the maximum of 5 posts for unpaid users.
+          <br />
+          Please become a member to add more posts.
+        </p>
+        <button
+          onClick={() => navigate("/membership")}
+          className="bg-black hover:bg-gray-800 w-1/2 mx-auto text-white py-4 px-6 rounded transition-all ease-in-out cursor-pointer"
+        >
+          Become a Member
+        </button>
+      </div>
+    );
+  }
+
+  // Show form normally if limit not reached or user is paid
   return (
     <div
       data-aos="fade-up"

@@ -3,16 +3,27 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { GoArrowDown, GoArrowUp, GoComment } from "react-icons/go";
 import { Link } from "react-router"; // make sure this is react-router-dom
+import { useQuery } from "@tanstack/react-query";
+import { fetchCommentsByPostId } from "../../Hoocks/Api";
 dayjs.extend(relativeTime);
 
 const PostCard = ({ post }) => {
-  // Compute votes: upvotes minus downvotes (like YouTube "net" count)
-  const upCount = post.upVote?.length || 0;
-  const downCount = post.downVote?.length || 0;
-  const netVotes = upCount - downCount;
+  const {
+    data: comments = [],
+    // isLoading: isCommentsLoading,
+    // isError: isCommentsError,
+    // refetch: refetchComments,
+  } = useQuery({
+    queryKey: ["comments", post._id],
+    queryFn: () => fetchCommentsByPostId(post._id),
+    enabled: !!post._id,
+  });
+
+  //  totoal votes
+  const totalVotes = post.upVote?.length + post.downVote?.length || 0;
 
   // Comments count comes from your post model (if you store comments array)
-  const commentCount = post.comments?.length ?? 0;
+  const commentCount = comments?.length ?? 0;
 
   // Time ago
   const timeAgo = dayjs(post.timeOfPost).fromNow();
@@ -28,7 +39,10 @@ const PostCard = ({ post }) => {
         {/* Author Info */}
         <div className="flex items-center gap-2 mb-5">
           <img
-            src="https://cdn-icons-png.flaticon.com/512/219/219983.png"
+            src={
+              post.authorPhoto ||
+              "https://cdn-icons-png.flaticon.com/512/219/219983.png"
+            }
             alt={post.authorName}
             className="w-10 h-10 rounded-full"
           />
@@ -69,7 +83,7 @@ const PostCard = ({ post }) => {
           {/* Net Votes */}
           <span className="flex items-center gap-1">
             <GoArrowDown />
-            {netVotes}
+            {totalVotes > 0 ? totalVotes : 0}
             <GoArrowUp />
           </span>
         </div>

@@ -12,13 +12,13 @@ const AnnouncementCard = ({ announcement }) => {
     <div className="relative bg-base-200 rounded-xl md:px-10 px-5 md:py-15 py-7 shadow-sm border border-base-300">
       {/* Ping animation element - only show if isLatest prop is true */}
       {announcement.isLatest && (
-        <div className="absolute -right-1 -top-1 flex h-4 w-4 md:h-5 md:w-5">
+        <div className="absolute right-1 top-1 flex h-4 w-4 md:h-5 md:w-5">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
           <span className="relative inline-flex rounded-full h-4 w-4 md:h-5 md:w-5 bg-emerald-500"></span>
         </div>
       )}
 
-      <h2 className="text-4xl font-bold mb-10 text-base-content">
+      <h2 className="md:text-4xl text-2xl font-bold mb-10 text-base-content">
         {announcement.isLatest ? "Latest Announcement" : "Announcements"}
       </h2>
 
@@ -51,6 +51,7 @@ const AnnouncementCard = ({ announcement }) => {
           <h3 className="text-xl font-semibold text-base-content mb-1">
             {announcement.title}
           </h3>
+
           <p className="text-base text-base-content">{announcement.message}</p>
         </div>
       </div>

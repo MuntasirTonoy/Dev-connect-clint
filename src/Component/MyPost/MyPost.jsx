@@ -1,23 +1,15 @@
-import React, { useContext } from "react";
-import { AuthContext } from "../../Firebase/AuthContext";
-import { useQuery } from "@tanstack/react-query";
+import React, { useContext, useEffect } from "react";
+import { DashboardContext } from "../../Pages/Dashboard/DashBoard";
 import Swal from "sweetalert2";
-import { fetchPostsByEmail, deletePost } from "../../Hoocks/Api";
+import { deletePost } from "../../Hoocks/Api";
 import Loading from "../Loading/Loading";
 
 const MyPosts = () => {
-  const { user } = useContext(AuthContext);
-  const {
-    data: posts,
-    isLoading,
-    isError,
-    error,
-    refetch,
-  } = useQuery({
-    queryKey: ["posts", user?.email],
-    queryFn: () => fetchPostsByEmail(user?.email),
-    enabled: !!user?.email,
-  });
+  const { posts, postLoading, postRefetch } = useContext(DashboardContext);
+  useEffect(() => {
+    // Force a refetch when the component mounts
+    postRefetch();
+  }, [postRefetch]);
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -38,20 +30,19 @@ const MyPosts = () => {
               "Your post has been deleted.",
               "success"
             );
-            await refetch(); // 🔁 Re-fetch the latest posts list
+            await postRefetch(); // re-fetch using function passed from context
           } else {
             Swal.fire("Failed!", "Post not found or already deleted.", "error");
           }
         } catch (error) {
-          console.error(error); // log for debugging
+          console.error(error);
           Swal.fire("Error", error.message || "Something went wrong!", "error");
         }
       }
     });
   };
 
-  if (isLoading) return <Loading />;
-  if (isError) return <p>Error: {error.message}</p>;
+  if (postLoading || !posts) return <Loading />;
 
   return (
     <div
@@ -64,7 +55,7 @@ const MyPosts = () => {
       <div className="overflow-x-auto">
         {posts.length > 0 ? (
           <table className="w-full min-w-[500px] text-sm">
-            <thead className="text-left mb-10 border-b border-gray-300">
+            <thead className="text-left border-b border-gray-300">
               <tr>
                 <th className="py-2">Title</th>
                 <th>Votes</th>

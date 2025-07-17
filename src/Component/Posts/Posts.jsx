@@ -1,18 +1,18 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext, useMemo } from "react";
+import { Link } from "react-router";
 import PostCard from "./PostCard";
 import Pagination from "react-js-pagination";
 import Loading from "../Loading/Loading";
-import { Link } from "react-router";
 import { AuthContext } from "../../Firebase/AuthContext";
 import { useQuery } from "@tanstack/react-query";
 import { fetchPosts } from "../../Hoocks/Api";
 
 const Posts = () => {
-  const [displayedPosts, setDisplayedPosts] = useState([]);
   const [sortByPopularity, setSortByPopularity] = useState(false);
+
   const [currentPage, setCurrentPage] = useState(0);
-  const { user } = useContext(AuthContext);
   const postsPerPage = 5;
+  const { user } = useContext(AuthContext);
 
   // ✅ Fetching posts using TanStack Query
   const {
@@ -25,9 +25,11 @@ const Posts = () => {
     staleTime: 1000 * 60 * 5,
   });
 
-  // ✅ Sorting + Pagination logic
-  useEffect(() => {
-    let posts = [...allPosts];
+  // ✅ Memoize sorted posts
+  const sortedPosts = useMemo(() => {
+    if (!allPosts) return [];
+
+    const posts = [...allPosts];
 
     if (sortByPopularity) {
       posts.sort(
@@ -40,10 +42,14 @@ const Posts = () => {
       posts.sort((a, b) => new Date(b.timeOfPost) - new Date(a.timeOfPost));
     }
 
+    return posts;
+  }, [allPosts, sortByPopularity]);
+
+  // ✅ Memoize paginated posts
+  const displayedPosts = useMemo(() => {
     const startIndex = currentPage * postsPerPage;
-    const selectedPosts = posts.slice(startIndex, startIndex + postsPerPage);
-    setDisplayedPosts(selectedPosts);
-  }, [allPosts, sortByPopularity, currentPage]);
+    return sortedPosts.slice(startIndex, startIndex + postsPerPage);
+  }, [sortedPosts, currentPage]);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber - 1);
@@ -52,7 +58,7 @@ const Posts = () => {
   if (isLoading || isError) return <Loading />;
 
   return (
-    <div className="max-w-3xl mx-auto p-4">
+    <div className="max-w-3xl mx-auto p-4 overflow-hidden">
       <div className="flex justify-between items-center mb-10">
         <h1 className="md:text-4xl text-2xl md:font-bold font-semibold">
           All Posts
@@ -61,7 +67,7 @@ const Posts = () => {
           className="bg-base-300 shadow-xs px-4 py-2 rounded hover:bg-base-200"
           onClick={() => {
             setSortByPopularity(!sortByPopularity);
-            setCurrentPage(0);
+            setCurrentPage(0); // reset to page 1 on sort toggle
           }}
         >
           {sortByPopularity ? "Sort by Newest" : "Sort by Popularity"}
