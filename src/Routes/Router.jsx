@@ -11,6 +11,7 @@ import MyPosts from "../Component/MyPost/MyPost";
 import DashBoard from "../Pages/DashBoard/DashBoard";
 import PrivateRoute from "../Private/PrivateRoute";
 import Notifications from "../Component/Notification/Notifications";
+import CommentPage from "../Pages/CommentPage.jsx/CommentPage";
 
 const router = createBrowserRouter([
   {
@@ -55,6 +56,14 @@ const router = createBrowserRouter([
           { path: "add-post", element: <AddPost /> },
           { path: "my-posts", element: <MyPosts /> },
         ],
+      },
+      {
+        path: "/comments/:postId",
+        element: (
+          <PrivateRoute>
+            <CommentPage />
+          </PrivateRoute>
+        ),
       },
     ],
   },

@@ -6,7 +6,9 @@ import { formatDistanceToNow, format, differenceInDays } from "date-fns";
 
 const Comments = ({ comments = [], postId, onCommentAdd }) => {
   const { user } = useContext(AuthContext);
+
   const [newComment, setNewComment] = useState("");
+  const [feedback, setFeedback] = useState("");
 
   const handleCommentSubmit = async () => {
     if (!user?.email) {
@@ -22,7 +24,9 @@ const Comments = ({ comments = [], postId, onCommentAdd }) => {
       message: newComment,
       avatar: user.photoURL || "https://via.placeholder.com/40",
       postId,
+      feedback,
     };
+    console.log(user, commentObj);
 
     try {
       await postComment(commentObj);

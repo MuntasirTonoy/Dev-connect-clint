@@ -102,3 +102,7 @@ export const deleteCommentById = async (id) => {
   const response = await api.delete(`/comments/${id}`);
   return response.data;
 };
+export const reportCommentById = async (commentId, feedback) => {
+  const response = await api.patch(`/comments/${commentId}`, { feedback });
+  return response.data;
+};

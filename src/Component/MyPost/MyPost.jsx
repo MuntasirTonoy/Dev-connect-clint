@@ -3,9 +3,11 @@ import { DashboardContext } from "../../Pages/Dashboard/DashBoard";
 import Swal from "sweetalert2";
 import { deletePost } from "../../Hoocks/Api";
 import Loading from "../Loading/Loading";
+import { useNavigate } from "react-router";
 
 const MyPosts = () => {
   const { posts, postLoading, postRefetch } = useContext(DashboardContext);
+  const navigate = useNavigate();
   useEffect(() => {
     // Force a refetch when the component mounts
     postRefetch();
@@ -71,7 +73,10 @@ const MyPosts = () => {
                     {post.upVote.length + post.downVote.length}
                   </td>
                   <td>
-                    <button className="text-blue-500 hover:underline">
+                    <button
+                      onClick={() => navigate(`/comments/${post._id}`)}
+                      className="text-blue-500 hover:underline"
+                    >
                       Comment
                     </button>
                   </td>
