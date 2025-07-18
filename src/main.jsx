@@ -8,6 +8,7 @@ import AuthProvider from "./Firebase/AuthContext";
 import { Toaster } from "react-hot-toast";
 import Aos from "aos";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
 Aos.init({
   offset: 120, // Offset (in px) from the original trigger point
   delay: 300, // Delay in ms

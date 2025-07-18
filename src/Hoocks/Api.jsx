@@ -118,3 +118,9 @@ export const initTheme = () => {
   const savedTheme = localStorage.getItem("theme") || "light";
   switchTheme(savedTheme);
 };
+export const createPaymentIntent = async (amount) => {
+  const response = await api.post("/create-payment-intent", {
+    price: parseFloat(amount),
+  });
+  return response.data.clientSecret;
+};

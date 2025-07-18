@@ -18,6 +18,7 @@ import { BsArrowLeft } from "react-icons/bs";
 import ShareModal from "../../Component/Modals/ShareModal";
 import Loading from "../../Component/Loading/Loading";
 import Comments from "../../Component/Comments/Comments";
+import { format, formatDistanceToNow } from "date-fns";
 
 const PostDetails = () => {
   const { id } = useParams();
@@ -101,12 +102,12 @@ const PostDetails = () => {
           <img
             src={post.authorPhoto || "https://shorturl.at/WUkZ2"}
             alt="author"
-            className="rounded-full w-12 h-12"
+            className="rounded-full w-10 h-10 ring-2 ring-offset-2"
           />
           <div>
             <h2 className="font-semibold text-lg">{post.author}</h2>
             <p className="text-sm text-gray-500">
-              Posted on {new Date(post.timeOfPost).toLocaleDateString()}
+              {format(new Date(post.timeOfPost), "h:mm a, MMMM d, yyyy")}
             </p>
           </div>
         </div>
@@ -122,7 +123,7 @@ const PostDetails = () => {
               key={i}
               className="bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-sm"
             >
-              {tag}
+              #{tag}
             </span>
           ))}
         </div>

@@ -41,7 +41,7 @@ const PostCard = ({ post }) => {
           <img
             src={post.authorPhoto}
             alt={post.authorName}
-            className="w-10 h-10 rounded-full"
+            className="w-10 h-10 rounded-full ring  ring-offset-2"
           />
           <div>
             <p className="font-semibold text-md">{post.author}</p>
