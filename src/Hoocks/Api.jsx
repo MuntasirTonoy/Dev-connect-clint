@@ -17,7 +17,6 @@ api.interceptors.request.use(
     if (user) {
       const token = await user.getIdToken();
       config.headers.Authorization = `Bearer ${token}`;
-      console.log("Sending token:", token);
     }
 
     return config;
@@ -109,4 +108,13 @@ export const deleteCommentById = async (id) => {
 export const reportCommentById = async (commentId, feedback) => {
   const response = await api.patch(`/comments/${commentId}`, { feedback });
   return response.data;
+};
+export const switchTheme = (newTheme) => {
+  document.documentElement.setAttribute("data-theme", newTheme);
+  localStorage.setItem("theme", newTheme);
+};
+
+export const initTheme = () => {
+  const savedTheme = localStorage.getItem("theme") || "light";
+  switchTheme(savedTheme);
 };
