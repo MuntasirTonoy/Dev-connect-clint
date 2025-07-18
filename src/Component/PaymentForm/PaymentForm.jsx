@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import Swal from "sweetalert2";
-import { createPaymentIntent } from "../../Hoocks/Api";
+import { createPaymentIntent, updateUserPaymentStatus } from "../../Hoocks/Api";
 
 const CARD_OPTIONS = {
   style: {
@@ -19,7 +19,7 @@ const CARD_OPTIONS = {
   },
 };
 
-const PaymentForm = ({ userInfo }) => {
+const PaymentForm = ({ userInfo, dataRefetch }) => {
   const [method, setMethod] = useState("visa");
   const [processing, setProcessing] = useState(false);
   const stripe = useStripe();
@@ -71,7 +71,6 @@ const PaymentForm = ({ userInfo }) => {
     setProcessing(true);
 
     try {
-      // Validate form and card
       const isValid = await trigger();
       if (!isValid) {
         setProcessing(false);
@@ -84,13 +83,20 @@ const PaymentForm = ({ userInfo }) => {
         return;
       }
 
-      const clientSecret = await createPaymentIntent(500);
+      const clientSecret = await createPaymentIntent(5);
 
       if (method === "bkash") {
-        // Simulate bKash payment success
-        setTimeout(() => {
+        setTimeout(async () => {
           showSuccessAlert("bKash payment successful!");
           console.log("bKash payment:", data.bkash);
+
+          try {
+            await updateUserPaymentStatus(userInfo?.email);
+            dataRefetch();
+          } catch (err) {
+            console.error("Failed to update payment status:", err);
+          }
+
           setProcessing(false);
         }, 1500);
         return;
@@ -114,6 +120,13 @@ const PaymentForm = ({ userInfo }) => {
       } else if (paymentIntent.status === "succeeded") {
         showSuccessAlert("Payment successful!");
         console.log("PaymentIntent:", paymentIntent);
+
+        try {
+          await updateUserPaymentStatus(userInfo?.email);
+          dataRefetch();
+        } catch (err) {
+          console.error("Failed to update payment status:", err);
+        }
       }
     } catch (err) {
       console.error("Payment error:", err);
@@ -149,7 +162,7 @@ const PaymentForm = ({ userInfo }) => {
           ].map((item) => (
             <label
               key={item.value}
-              className={`flex items-center gap-2 px-3 py-2  rounded-md cursor-pointer transition ${
+              className={`flex items-center gap-2 px-3 py-2 rounded-md cursor-pointer transition ${
                 method === item.value
                   ? "bg-base-content text-base-100 ring-2 ring-offset-2 ring-secondary"
                   : "bg-base-300 hover:border-base-content opacity-70"
@@ -193,7 +206,7 @@ const PaymentForm = ({ userInfo }) => {
               })}
               type="text"
               placeholder="01XXXXXXXXX"
-              className="w-full bg-base-300  rounded-md px-4 py-2 focus:ring-2 focus:ring-primary focus:border-transparent"
+              className="w-full bg-base-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-primary focus:border-transparent"
             />
             {errors.bkash && (
               <p className="text-red-500 text-sm mt-1">
@@ -226,7 +239,7 @@ const PaymentForm = ({ userInfo }) => {
               <label className="block text-sm font-medium mb-1">
                 Card Info
               </label>
-              <div className="p-3 rounded-md   bg-base-300 focus-within:ring-2 focus-within:ring-primary">
+              <div className="p-3 rounded-md bg-base-300 focus-within:ring-2 focus-within:ring-primary">
                 <CardElement options={CARD_OPTIONS} />
               </div>
             </div>

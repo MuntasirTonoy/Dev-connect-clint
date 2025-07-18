@@ -82,7 +82,7 @@ const MyProfile = () => {
         {posts.length > 0 ? (
           <ul className="list-decimal pl-5">
             {posts
-              .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) // Sort by date (newest first)
+              .sort((a, b) => new Date(b.timeOfPost) - new Date(a.timeOfPost)) // Sort by date (newest first)
               .slice(0, 3) // Take only 3 most recent
               .map((post) => (
                 <li

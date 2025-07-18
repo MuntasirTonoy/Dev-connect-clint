@@ -124,3 +124,7 @@ export const createPaymentIntent = async (amount) => {
   });
   return response.data.clientSecret;
 };
+export const updateUserPaymentStatus = async (email) => {
+  const response = await api.patch("/users/payment-status", { email });
+  return response.data;
+};

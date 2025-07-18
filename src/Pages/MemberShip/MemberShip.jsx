@@ -9,11 +9,26 @@ import { Elements } from "@stripe/react-stripe-js";
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 const Membership = () => {
   const { user } = useContext(AuthContext);
-  const { data: userInfo } = useQuery({
+  const { data: userInfo, refetch: dataRefetch } = useQuery({
     queryKey: ["user", user?.email],
     queryFn: () => fetchUserByEmail(user?.email),
     enabled: !!user?.email,
   });
+  if (userInfo?.paymentStatus === "paid") {
+    return (
+      <div className="rounded-lg border border-green-500 flex items-center justify-center h-[30vh] text-center m-10 ">
+        <div>
+          <h2 className="text-2xl font-bold text-green-500">
+            Your are a Premium User
+          </h2>
+          <p className="mt-4">
+            Your membership is now active. <br /> Enjoy all the premium
+            features!
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <section className="max-w-7xl mx-auto px-4 py-12 grid md:grid-cols-3 gap-8">
@@ -76,7 +91,7 @@ const Membership = () => {
 
       {/* Right Column: Payment Form */}
       <Elements stripe={stripePromise}>
-        <PaymentForm userInfo={userInfo} />
+        <PaymentForm userInfo={userInfo} dataRefetch={dataRefetch} />
       </Elements>
     </section>
   );

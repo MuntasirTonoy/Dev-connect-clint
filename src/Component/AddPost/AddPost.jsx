@@ -6,6 +6,8 @@ import { createPost, fetchTags } from "../../Hoocks/Api";
 import { useNavigate } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import { DashboardContext } from "../../Pages/Dashboard/DashBoard";
+import Lottie from "lottie-react";
+import animationData from "../../assets/animation/sad emotion.json";
 
 const AddPost = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -31,6 +33,7 @@ const AddPost = () => {
   const userPostCount = posts?.length || 0;
   const isUnpaidAndExceeded =
     userInfo?.paymentStatus === "unpaid" && userPostCount >= 5;
+  const isExceeded = userInfo?.paymentStatus === "paid" && userPostCount >= 10;
 
   const onSubmit = async (data) => {
     const tags = data.tag ? data.tag.map((t) => t.value) : [];
@@ -118,6 +121,24 @@ const AddPost = () => {
         >
           Become a Member
         </button>
+      </div>
+    );
+  }
+  if (isExceeded) {
+    return (
+      <div className="card bg-base-200 p-6 text-center text-base-content space-y-6">
+        <h2 className="text-3xl font-bold">Post Limit Reached</h2>
+        <p className="text-lg">
+          You have reached the maximum of <strong>10</strong> posts for paid
+          users.
+          <br />
+          Use another account to add more posts.
+        </p>
+        <Lottie
+          animationData={animationData}
+          loop
+          className="md:w-1/5 w-1/2 mx-auto"
+        />
       </div>
     );
   }
