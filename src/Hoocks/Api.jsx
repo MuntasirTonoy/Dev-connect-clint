@@ -4,6 +4,9 @@ import { getAuth } from "firebase/auth";
 const api = axios.create({
   baseURL: "http://localhost:3000",
 });
+// const api = axios.create({
+//   baseURL: "https://dev-connect-server.vercel.app",
+// });
 
 // Axios request interceptor to add Firebase ID token
 api.interceptors.request.use(
@@ -14,6 +17,7 @@ api.interceptors.request.use(
     if (user) {
       const token = await user.getIdToken();
       config.headers.Authorization = `Bearer ${token}`;
+      console.log("Sending token:", token);
     }
 
     return config;

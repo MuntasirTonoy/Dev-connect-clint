@@ -61,7 +61,7 @@ const PostDetails = () => {
 
     setIsSubmitting(true);
     try {
-      await updateVote(id, user.email, type);
+      await updateVote(id, type);
       await refetchPost();
     } catch (err) {
       console.error("Vote failed", err);

@@ -39,10 +39,7 @@ const PostCard = ({ post }) => {
         {/* Author Info */}
         <div className="flex items-center gap-2 mb-5">
           <img
-            src={
-              post.authorPhoto ||
-              "https://cdn-icons-png.flaticon.com/512/219/219983.png"
-            }
+            src={post.authorPhoto}
             alt={post.authorName}
             className="w-10 h-10 rounded-full"
           />

@@ -74,7 +74,7 @@ const Membership = () => {
             ৳499 / $5
           </h3>
           <p className="text-base-content text-sm mb-4">
-            One-time membership fee
+            Life-time membership fee
           </p>
           <ul className="space-y-2 text-sm text-base-content">
             <li className="flex items-center gap-2">
