@@ -98,9 +98,9 @@ const Navbar = () => {
                 className="theme-controller"
                 value="synthwave"
                 onChange={(e) =>
-                  switchTheme(e.target.checked ? "synthwave" : "light")
+                  switchTheme(e.target.checked ? "dark" : "light")
                 }
-                defaultChecked={localStorage.getItem("theme") === "synthwave"}
+                defaultChecked={localStorage.getItem("theme") === "dark"}
               />
 
               {/* sun icon */}
@@ -132,9 +132,9 @@ const Navbar = () => {
                 className="theme-controller"
                 value="synthwave"
                 onChange={(e) =>
-                  switchTheme(e.target.checked ? "synthwave" : "light")
+                  switchTheme(e.target.checked ? "dark" : "light")
                 }
-                defaultChecked={localStorage.getItem("theme") === "synthwave"}
+                defaultChecked={localStorage.getItem("theme") === "dark"}
               />
 
               {/* sun icon */}

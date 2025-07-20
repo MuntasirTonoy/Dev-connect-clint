@@ -6,6 +6,7 @@ import { fetchUserByEmail } from "../../Hoocks/Api";
 import PaymentForm from "../../Component/PaymentForm/PaymentForm";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import { Helmet } from "react-helmet-async";
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 const Membership = () => {
   const { user } = useContext(AuthContext);
@@ -17,6 +18,9 @@ const Membership = () => {
   if (userInfo?.paymentStatus === "paid") {
     return (
       <div className="rounded-lg border border-green-500 flex items-center justify-center h-[30vh] text-center m-10 ">
+        <Helmet>
+          <title>Membership</title>
+        </Helmet>
         <div>
           <h2 className="text-2xl font-bold text-green-500">
             Your are a Premium User
@@ -32,6 +36,9 @@ const Membership = () => {
 
   return (
     <section className="max-w-7xl mx-auto px-4 py-12 grid md:grid-cols-3 gap-8">
+      <Helmet>
+        <title>Membership | DevConnect</title>
+      </Helmet>
       {/* Left Column: User Info + Price */}
       <div
         data-aos="fade-right"

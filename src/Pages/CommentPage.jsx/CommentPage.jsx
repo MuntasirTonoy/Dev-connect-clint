@@ -4,6 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchCommentsByPostId, reportCommentById } from "../../Hoocks/Api";
 import Swal from "sweetalert2";
 import Loading from "../../Component/Loading/Loading";
+import { Helmet } from "react-helmet-async";
+import CommentModal from "../../Component/Modals/CommentModal";
 
 const feedbackOptions = [
   "This is offensive",
@@ -15,6 +17,10 @@ const CommentPage = () => {
   const { postId } = useParams();
   const [reportedIds, setReportedIds] = useState({});
   const [selectedFeedback, setSelectedFeedback] = useState({});
+
+  // Modal state
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
 
   const {
     data: comments = [],
@@ -44,10 +50,23 @@ const CommentPage = () => {
     }
   };
 
+  const openModal = (message) => {
+    setModalMessage(message);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setModalMessage("");
+  };
+
   if (isLoading) return <Loading />;
 
   return (
     <div className="card bg-base-200 p-6 text-base-content">
+      <Helmet>
+        <title>Comments</title>
+      </Helmet>
       <h2 className="text-3xl font-bold mb-4">All Comments</h2>
       <div className="overflow-x-auto">
         <table className="table w-full min-w-[600px] text-sm">
@@ -66,10 +85,25 @@ const CommentPage = () => {
                 ? comment.feedback
                 : selectedFeedback[comment._id] || "";
 
+              const isLong = comment.message.length > 20;
+              const preview = isLong
+                ? comment.message.slice(0, 20) + "..."
+                : comment.message;
+
               return (
                 <tr key={comment._id}>
                   <td>{comment.email}</td>
-                  <td>{comment.message}</td>
+                  <td>
+                    {preview}{" "}
+                    {isLong && (
+                      <button
+                        className="text-blue-500 underline ml-2"
+                        onClick={() => openModal(comment.message)}
+                      >
+                        Read More
+                      </button>
+                    )}
+                  </td>
                   <td>
                     <select
                       className="select"
@@ -104,6 +138,13 @@ const CommentPage = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Modal for full comment */}
+      <CommentModal
+        isOpen={modalOpen}
+        onClose={closeModal}
+        message={modalMessage}
+      />
     </div>
   );
 };

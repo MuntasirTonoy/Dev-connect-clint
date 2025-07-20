@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { createContext } from "react";
 import { fetchPostsByEmail, fetchUserByEmail } from "../../Hoocks/Api";
 import Loading from "../../Component/Loading/Loading";
+import { Helmet } from "react-helmet-async";
 
 export const DashboardContext = createContext(null);
 
@@ -43,6 +44,9 @@ const DashBoard = () => {
     <DashboardContext.Provider
       value={{ posts, userInfo, postLoading, postRefetch }}
     >
+      <Helmet>
+        <title>Dashboard</title>
+      </Helmet>
       <section className="max-w-7xl  mx-auto px-4 z-0 py-12 ">
         {/* Top Tabs Navigation */}
         <nav className="flex space-x-1  md:space-x-4 bg-base-100 border-b-2 text-sm p-4 mb-6">

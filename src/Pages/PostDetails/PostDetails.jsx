@@ -18,7 +18,7 @@ import { BsArrowLeft } from "react-icons/bs";
 import ShareModal from "../../Component/Modals/ShareModal";
 import Loading from "../../Component/Loading/Loading";
 import Comments from "../../Component/Comments/Comments";
-import { format, formatDistanceToNow } from "date-fns";
+import { format } from "date-fns";
 
 const PostDetails = () => {
   const { id } = useParams();

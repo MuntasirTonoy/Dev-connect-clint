@@ -8,6 +8,8 @@ import AuthProvider from "./Firebase/AuthContext";
 import { Toaster } from "react-hot-toast";
 import Aos from "aos";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { initTheme } from "./Hoocks/Api";
+import { HelmetProvider } from "react-helmet-async";
 
 Aos.init({
   offset: 120, // Offset (in px) from the original trigger point
@@ -19,14 +21,17 @@ Aos.init({
 });
 
 const queryClient = new QueryClient();
+initTheme();
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <RouterProvider router={router} />
-      </AuthProvider>
-      <Toaster />
-    </QueryClientProvider>
+    <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <RouterProvider router={router} />
+        </AuthProvider>
+        <Toaster />
+      </QueryClientProvider>
+    </HelmetProvider>
   </StrictMode>
 );
