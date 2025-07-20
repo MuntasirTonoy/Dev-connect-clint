@@ -34,7 +34,7 @@ const PostCard = ({ post }) => {
         data-aos="zoom-out"
         data-aos-duration="200"
         data-aos-delay="100"
-        className="p-7 rounded shadow-xs mb-4 bg-base-300 hover:bg-base-200 transition"
+        className="p-7 rounded-md shadow-xs mb-4 bg-base-300 hover:bg-base-200 transition"
       >
         {/* Author Info */}
         <div className="flex items-center gap-2 mb-5">
@@ -64,7 +64,7 @@ const PostCard = ({ post }) => {
               key={i}
               className="bg-gray-200 text-gray-800 px-2 py-1 rounded-full"
             >
-              {t}
+              #{t}
             </span>
           ))}
         </div>

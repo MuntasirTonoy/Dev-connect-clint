@@ -19,6 +19,7 @@ import ShareModal from "../../Component/Modals/ShareModal";
 import Loading from "../../Component/Loading/Loading";
 import Comments from "../../Component/Comments/Comments";
 import { format } from "date-fns";
+import { Helmet } from "react-helmet-async";
 
 const PostDetails = () => {
   const { id } = useParams();
@@ -84,6 +85,9 @@ const PostDetails = () => {
       data-aos-delay="100"
       className="max-w-7xl mx-auto px-4 md:py-10 py-4 grid md:grid-cols-3 gap-10"
     >
+      <Helmet>
+        <title>Post</title>
+      </Helmet>
       {/* Left: Post Content */}
       <div className="md:col-span-2">
         <div className="text-sm flex text-base-content mb-4">

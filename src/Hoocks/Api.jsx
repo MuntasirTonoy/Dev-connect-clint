@@ -1,12 +1,12 @@
 import axios from "axios";
 import { getAuth } from "firebase/auth";
 
-// const api = axios.create({
-//   baseURL: "http://localhost:3000",
-// });
 const api = axios.create({
-  baseURL: "https://dev-connect-server.vercel.app",
+  baseURL: "http://localhost:3000",
 });
+// const api = axios.create({
+//   baseURL: "https://dev-connect-server.vercel.app",
+// });
 
 // Axios request interceptor to add Firebase ID token
 api.interceptors.request.use(
@@ -52,7 +52,7 @@ export const fetchPostById = async (id) => {
 
 export const searchPostsByTag = async (tag) => {
   try {
-    const response = await api.get("/posts/search", {
+    const response = await api.get("/posts", {
       params: { tag },
     });
     return response.data;

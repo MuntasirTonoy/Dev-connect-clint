@@ -75,9 +75,9 @@ const MyPosts = () => {
                   <td>
                     <button
                       onClick={() => navigate(`/comments/${post._id}`)}
-                      className="text-blue-500 hover:underline"
+                      className="text-base-content hover:bg-base-100 btn btn-xs bg-base-300"
                     >
-                      Comment
+                      Comments
                     </button>
                   </td>
                   <td>

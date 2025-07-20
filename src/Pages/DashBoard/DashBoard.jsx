@@ -44,10 +44,10 @@ const DashBoard = () => {
     <DashboardContext.Provider
       value={{ posts, userInfo, postLoading, postRefetch }}
     >
-      <Helmet>
-        <title>Dashboard</title>
-      </Helmet>
       <section className="max-w-7xl  mx-auto px-4 z-0 py-12 ">
+        <Helmet>
+          <title>Dashboard</title>
+        </Helmet>
         {/* Top Tabs Navigation */}
         <nav className="flex space-x-1  md:space-x-4 bg-base-100 border-b-2 text-sm p-4 mb-6">
           <NavLink

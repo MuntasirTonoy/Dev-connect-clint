@@ -1,6 +1,6 @@
 import React from "react";
 import Search from "../Search/Search";
-const Banner = ({ setSearchResults }) => {
+const Banner = ({ searchResult, setSearchResults }) => {
   return (
     <section
       data-aos="fade-up"
@@ -16,7 +16,10 @@ const Banner = ({ setSearchResults }) => {
         <h1 className="text-4xl md:text-5xl font-extrabold mb-10">
           Find What You're Looking For
         </h1>
-        <Search setSearchResults={setSearchResults} />
+        <Search
+          searchResult={searchResult}
+          setSearchResults={setSearchResults}
+        />
       </div>
     </section>
   );

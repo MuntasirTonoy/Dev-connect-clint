@@ -1,8 +1,9 @@
-import React, { useContext } from "react";
-
 import { HiBadgeCheck } from "react-icons/hi";
 import { DashboardContext } from "../../Pages/DashBoard/DashBoard";
 import { format } from "date-fns";
+import { useContext } from "react";
+import goldenBadge from "../../assets/Images/golden-badge.png";
+import bronzeBadge from "../../assets/Images/bronze-badge.png";
 
 const MyProfile = () => {
   const { posts, userInfo } = useContext(DashboardContext);
@@ -30,15 +31,15 @@ const MyProfile = () => {
             {userInfo?.email}
           </p>
           {/* Badges */}
-          <div className="flex justify-center items-center gap-4 mt-2 md:mt-5">
-            {userInfo?.paymentStatus === "paid" && (
-              <span className="bg-yellow-400/30 p-3 rounded-full text-xl font-medium">
-                🥇
-              </span>
-            )}
-            <span className="bg-gray-400/30 text-white p-3 rounded-full text-xl font-medium">
-              🥉
-            </span>
+          <div className="mt-2 md:mt-5">
+            <h1>Achivements</h1>
+            <div className="flex justify-center items-center gap-4 mt-2 ">
+              {userInfo?.paymentStatus === "paid" && (
+                <img src={goldenBadge} alt="golden badge" className="w-10" />
+              )}
+
+              <img src={bronzeBadge} alt="bronze badge" className="w-10" />
+            </div>
           </div>
           <div className="mt-6 w-full max-w-xs">
             <h3 className="text-lg font-semibold mb-3 text-base-content">

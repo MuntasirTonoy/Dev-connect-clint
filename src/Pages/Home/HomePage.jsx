@@ -13,21 +13,13 @@ const HomePage = () => {
       <Helmet>
         <title>Home | DevConnect</title>
       </Helmet>
-      <Banner setSearchResults={setSearchResults} />
+      <Banner
+        setSearchResults={setSearchResults}
+        searchResults={searchResults}
+      />
+      {searchResults && <SearchResult searchResults={searchResults} />}
       <LatestAnnouncement />
-
-      {/* Show SearchResult if search happened */}
-      {searchResults ? (
-        searchResults.length > 0 ? (
-          <SearchResult results={searchResults} />
-        ) : (
-          <p className="text-center text-red-500 text-lg">
-            No posts found for your search.
-          </p>
-        )
-      ) : (
-        <Posts />
-      )}
+      <Posts />
     </div>
   );
 };
