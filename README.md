@@ -1,6 +1,6 @@
 # 💬 Dev Connect – MERN Stack Forum
 
-Welcome to **Dev Connect**, a fully responsive forum web app built with the **MERN** stack. It’s a platform where developers can connect, post, vote, comment, and collaborate in a structured, interactive way.
+Welcome to **Dev Connect**, a fully responsive forum web application built using the **MERN** stack. This platform enables developers to connect, post, vote, comment, and collaborate through an intuitive and engaging interface.
 
 🔗 **Live Site**: [https://dev-connect-t7.web.app/](https://dev-connect-t7.web.app/)
 
@@ -10,37 +10,48 @@ Welcome to **Dev Connect**, a fully responsive forum web app built with the **ME
 
 ### 🎯 Purpose
 
-To build a fully responsive forum that showcases core full-stack development skills including:
+This project showcases full-stack development skills including:
 
-- REST API design
+- RESTful API design
 - MongoDB data modeling
 - JWT-based authentication
-- Firebase social login integration
-- User and admin dashboard roles
-- Voting, commenting, reporting features
-- UI/UX best practices
+- Firebase social login (Google)
+- Role-based dashboards (user/admin)
+- Voting, commenting, and reporting
+- Membership system with Stripe payment
+- Responsive UI/UX with modern animations
 
 ---
 
-### 🧑‍💻 User Experience
+## 🧑‍💻 User Experience
 
-- 🔐 **Firebase Auth**: Email & social login (Google)
-- 🏷️ **Tag-based Search**: Search posts by tag (backend-powered)
-- 📤 **Share Posts**: Share via Facebook or WhatsApp
-- ✍️ **Upvote/Downvote**: Toggle like/dislike logic
-- 💬 **Comments**: With modal preview and reporting
-- 🪪 **Membership System**: 5 post limit lifted after payment
-- 🏅 **Badges**: Bronze (on register), Gold (on membership)
-- 📱 **Responsive**: Mobile, tablet, and desktop support
+- 🔐 **Authentication**: Email/password & Google sign-in via Firebase
+- 🏷️ **Tag-based Search**: Backend-powered, case-insensitive search
+- 📤 **Post Sharing**: Share posts to Facebook and WhatsApp
+- 👍 **Voting System**: Upvote/downvote posts with toggle logic
+- 💬 **Commenting**: Leave comments with report and preview modals
+- 💳 **Membership System**: Free users limited to 5 posts; upgrade via Stripe
+- 🏅 **Badges**: Bronze on registration, Gold after payment
+- 📱 **Responsive Design**: Optimized for all devices
 
-### 📊 Admin Tools
+---
 
-- 🔧 **Admin Dashboard** with:
-  - Manage Users (Make admin, search)
-  - View & act on **Reported Comments**
-  - Post **Announcements**
-  - Manage **Tags**
-  - Visual **Pie Chart Stats** (Posts, Comments, Users)
+## 🛠️ Admin Tools
+
+- 🔧 **Admin Dashboard** with tools to:
+  - Manage users (search, assign admin role)
+  - View and handle reported comments
+  - Post announcements
+  - Manage tags
+  - View forum statistics (users, posts, comments) via pie charts
+
+---
+
+## 💳 Stripe Integration
+
+- Secure payment system using `@stripe/react-stripe-js`
+- Upgrade to full membership via checkout
+- Unlocks unlimited posting and grants Gold badge
 
 ---
 
@@ -48,22 +59,24 @@ To build a fully responsive forum that showcases core full-stack development ski
 
 ### 🖥️ Frontend
 
-- `React 19` + `React Router`
-- `Tailwind CSS 4` + `AOS` for animation
-- `Firebase` (auth)
-- `React Hook Form` for forms
+- `React 19` with `React Router 7`
+- `Tailwind CSS 4` + `AOS` (animation)
+- `Firebase` Authentication
+- `React Hook Form` for robust form handling
 - `React Select`, `React Share`
-- `Axios`, `React Query`, `SweetAlert2`
-- `Pagination`, `Day.js`, `date-fns`
+- `React Helmet Async` for SEO
+- `React Query` for async data handling
+- `Axios`, `SweetAlert2`, `Hot Toast`
+- `Pagination`, `date-fns`, `dayjs` for date utilities
 
 ### 🌐 Backend
 
 - `Node.js`, `Express`
 - `MongoDB` (native driver)
-- `dotenv`, `CORS`
+- JWT-based route protection
+- `dotenv`, `CORS` for secure environment setup
 
 ---
 
-## 🛠️ Getting Started
-
-### 🧬 Clone & Install
+Try now and experince the Connection of Developers today.
+---Muntasir Manhmud (Tonoy)
