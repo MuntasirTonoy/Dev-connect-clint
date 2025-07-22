@@ -79,4 +79,5 @@ This project showcases full-stack development skills including:
 ---
 
 Empowering developers to connect, collaborate, and grow together — start your journey with Dev Connect today.Start sharing, start learning, start building — Dev Connect is where developers unite.
-— Muntasir Mahmud Tonoyy
+
+### Muntasir Mahmud Tonoy
