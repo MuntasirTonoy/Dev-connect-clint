@@ -16,10 +16,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav
-      data-aos="fade-down"
-      className="bg-base-200 shadow-xs mb-10 relative z-50 "
-    >
+    <nav data-aos="fade-down" className="bg-base-200 shadow-xs  relative z-50 ">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}

@@ -128,3 +128,7 @@ export const updateUserPaymentStatus = async (email) => {
   const response = await api.patch("/users/payment-status", { email });
   return response.data;
 };
+export const fetchReportedComments = async () => {
+  const response = await api.get("/reported-comments");
+  return response.data;
+};

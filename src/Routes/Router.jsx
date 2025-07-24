@@ -12,11 +12,16 @@ import DashBoard from "../Pages/DashBoard/DashBoard";
 import PrivateRoute from "../Private/PrivateRoute";
 import Notifications from "../Component/Notification/Notifications";
 import CommentPage from "../Pages/CommentPage.jsx/CommentPage";
+import ManageUser from "../Component/ManageUser/ManageUser";
+import Reports from "../Component/Reports/Reports";
+import MakeAnnouncement from "../Component/MakeAnnouncement/MakeAnnouncement";
+import Error from "../Pages/Error/Error";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
+    errorElement: <Error />,
     children: [
       { index: true, element: <HomePage /> },
       {
@@ -55,6 +60,30 @@ const router = createBrowserRouter([
           { index: true, element: <MyProfile /> },
           { path: "add-post", element: <AddPost /> },
           { path: "my-posts", element: <MyPosts /> },
+          {
+            path: "manage-user",
+            element: (
+              <PrivateRoute allowedRoles={["admin"]}>
+                <ManageUser />
+              </PrivateRoute>
+            ),
+          },
+          {
+            path: "reports",
+            element: (
+              <PrivateRoute allowedRoles={["admin"]}>
+                <Reports />
+              </PrivateRoute>
+            ),
+          },
+          {
+            path: "make-announcement",
+            element: (
+              <PrivateRoute allowedRoles={["admin"]}>
+                <MakeAnnouncement />
+              </PrivateRoute>
+            ),
+          },
         ],
       },
       {

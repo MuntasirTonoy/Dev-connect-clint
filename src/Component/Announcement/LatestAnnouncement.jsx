@@ -16,7 +16,8 @@ const LatestAnnouncement = () => {
   });
 
   if (isLoading) return <Loading />;
-  if (error) return <div>Error loading announcement</div>;
+  if (error) return <Error />;
+
   if (!announcements || announcements.length === 0) return null;
 
   // Sort by date and get the latest

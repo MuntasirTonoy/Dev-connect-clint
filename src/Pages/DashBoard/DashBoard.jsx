@@ -37,45 +37,93 @@ const DashBoard = () => {
   });
 
   if (postLoading || userLoading) return <Loading />;
-  if (postError || userError)
-    return <p className="text-red-500">Error loading dashboard data.</p>;
+  if (postError || userError || postErrObj || userErrObj)
+    return (
+      <p className="text-red-500 text-center">Error loading dashboard data.</p>
+    );
 
   return (
     <DashboardContext.Provider
       value={{ posts, userInfo, postLoading, postRefetch }}
     >
-      <section className="max-w-7xl  mx-auto px-4 z-0 py-12 ">
-        <Helmet>
-          <title>Dashboard</title>
-        </Helmet>
-        {/* Top Tabs Navigation */}
-        <nav className="flex space-x-1  md:space-x-4 bg-base-100 border-b-2 text-sm p-4 mb-6">
-          <NavLink
-            to="/dashboard"
-            end
-            className="dashB px-4 py-2 rounded hover:bg-base-300"
-          >
-            My Profile
-          </NavLink>
-          <NavLink
-            to="/dashboard/add-post"
-            className="dashB px-4 py-2 rounded hover:bg-base-300"
-          >
-            Add Post
-          </NavLink>
-          <NavLink
-            to="/dashboard/my-posts"
-            className="dashB px-4 py-2 rounded hover:bg-base-300"
-          >
-            My Posts
-          </NavLink>
-        </nav>
+      <Helmet>
+        <title>Dashboard</title>
+      </Helmet>
 
-        {/* Main Content */}
-        <main>
-          <Outlet />
-        </main>
-      </section>
+      <div className="drawer lg:drawer-open">
+        {/* ✅ Drawer Toggle Button (Hamburger) */}
+        <input
+          id="dashboard-drawer"
+          type="checkbox"
+          className="drawer-toggle"
+        />
+
+        <div className="drawer-content flex flex-col">
+          {/* ✅ Page content here */}
+          <div className="w-full flex justify-between items-center px-4 py-2 bg-base-100 border-b lg:hidden">
+            <label
+              htmlFor="dashboard-drawer"
+              className="btn btn-ghost lg:hidden"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </label>
+          </div>
+
+          <main className="p-4 w-full ">
+            {/* <h1 className="md:text-4xl text-2xl md:font-bold font-semibold mb-5">
+              Dashboard
+            </h1> */}
+            <Outlet />
+          </main>
+        </div>
+
+        {/* ✅ Sidebar menu */}
+        <div className="drawer-side">
+          <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
+          <ul className="menu p-4 w-64 pt-20 min-h-full bg-base-200 text-base-content">
+            <li>
+              <NavLink to="/dashboard" end>
+                My Profile
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink to="/dashboard/my-posts">My Posts</NavLink>
+            </li>
+            <li>
+              <NavLink to="/dashboard/add-post">Add Post</NavLink>
+            </li>
+            {userInfo.role === "admin" && (
+              <>
+                <li>
+                  <NavLink to="/dashboard/manage-user">Manage User</NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/reports">Reports</NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/make-announcement">
+                    Make Announcement
+                  </NavLink>
+                </li>
+              </>
+            )}
+          </ul>
+        </div>
+      </div>
     </DashboardContext.Provider>
   );
 };
