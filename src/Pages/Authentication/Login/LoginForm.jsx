@@ -31,6 +31,7 @@ const LoginForm = () => {
         showConfirmButton: false,
         timer: 2000,
       });
+      console.log("Location" + location.state);
       navigate(`${location?.state ? location.state : "/"}`);
     } catch (error) {
       console.error("Login error:", error.message);
@@ -59,7 +60,8 @@ const LoginForm = () => {
         showConfirmButton: false,
         timer: 2000,
       });
-      navigate(`${location?.state ? location.state : "/"}`);
+      console.log(location);
+      navigate(`${location?.state ? location.state?.from : "/"}`);
     } catch (error) {
       console.error("Google login error:", error);
       Swal.fire({

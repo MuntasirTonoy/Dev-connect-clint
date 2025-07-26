@@ -6,10 +6,13 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import toast from "react-hot-toast";
+import axios from "axios";
+import Loading from "../../../Component/Loading/Loading";
 
 const RegisterForm = () => {
   const { createUser, signInWithGoogle } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const {
@@ -18,32 +21,51 @@ const RegisterForm = () => {
     formState: { errors },
   } = useForm();
 
-  // ✅ Show toast for all field errors after render
   useEffect(() => {
     if (errors.name?.message) toast.error(errors.name.message);
     if (errors.email?.message) toast.error(errors.email.message);
     if (errors.password?.message) toast.error(errors.password.message);
-  }, [errors.name, errors.email, errors.password]);
+    if (errors.image?.message) toast.error(errors.image.message);
+  }, [errors]);
 
   const onSubmit = async (data) => {
     try {
-      const { email, password, name } = data;
-      await createUser(email, password, name);
+      setLoading(true);
+      const { email, password, name, image } = data;
+
+      const imageFile = image[0];
+      const formData = new FormData();
+      formData.append("image", imageFile);
+
+      const res = await axios.post(
+        `https://api.imgbb.com/1/upload?key=${
+          import.meta.env.VITE_IMGBB_API_KEY
+        }`,
+        formData
+      );
+      const imageUrl = res.data?.data?.url;
+
+      await createUser(email, password, name, imageUrl);
+
       Swal.fire({
         icon: "success",
         title: "Registration Successful, Login now",
         showConfirmButton: false,
         timer: 2000,
       });
-      navigate("/join");
+
+      navigate(location?.state || "/");
     } catch (err) {
       console.error(err);
-      toast.error("Registration failed");
+      toast.error(err.message || "Registration failed");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleGoogleLogin = async () => {
     try {
+      setLoading(true);
       await signInWithGoogle();
       Swal.fire({
         icon: "success",
@@ -54,28 +76,34 @@ const RegisterForm = () => {
       navigate("/");
     } catch (error) {
       console.error("Google sign-in error:", error);
-      toast.error("Google sign-in failed");
+      toast.error(error.message || "Google sign-in failed");
+    } finally {
+      setLoading(false);
     }
   };
 
+  if (loading) return <Loading />;
+
   return (
-    <div className="animate-fade-in p-10">
+    <div className="animate-fade-in px-10 py-5">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        {/* Image Upload */}
+        <input
+          {...register("image", { required: "Image is required" })}
+          type="file"
+          accept="image/*"
+          className="file-input file-input-bordered w-full"
+        />
+
         {/* Full Name */}
         <input
           {...register("name", {
             required: "Name is required",
-            minLength: {
-              value: 3,
-              message: "Name must be at least 3 characters",
-            },
-            maxLength: {
-              value: 50,
-              message: "Name must be at most 50 characters",
-            },
+            minLength: { value: 3, message: "Minimum 3 characters" },
+            maxLength: { value: 50, message: "Maximum 50 characters" },
             pattern: {
               value: /^[A-Za-z\s]+$/,
-              message: "Name must only contain letters and spaces",
+              message: "Only letters and spaces allowed",
             },
           })}
           type="text"
@@ -88,8 +116,8 @@ const RegisterForm = () => {
           {...register("email", {
             required: "Email is required",
             pattern: {
-              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-              message: "Email is not valid",
+              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+              message: "Invalid email",
             },
           })}
           type="email"
@@ -102,14 +130,10 @@ const RegisterForm = () => {
           <input
             {...register("password", {
               required: "Password is required",
-              minLength: {
-                value: 6,
-                message: "Password must be at least 6 characters",
-              },
+              minLength: { value: 6, message: "Minimum 6 characters" },
               pattern: {
                 value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/,
-                message:
-                  "Password must contain at least one letter and one number",
+                message: "At least one letter and one number",
               },
             })}
             type={showPassword ? "text" : "password"}
@@ -125,16 +149,13 @@ const RegisterForm = () => {
           </button>
         </div>
 
-        {/* Submit Button */}
         <button className="btn btn-neutral w-full" type="submit">
           Register
         </button>
       </form>
 
-      {/* Divider */}
       <div className="divider">OR</div>
 
-      {/* Google Login Button */}
       <button
         onClick={handleGoogleLogin}
         type="button"

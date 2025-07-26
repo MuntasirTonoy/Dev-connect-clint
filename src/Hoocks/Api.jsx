@@ -1,14 +1,14 @@
 import axios from "axios";
 import { getAuth } from "firebase/auth";
 
-const api = axios.create({
-  baseURL: "http://localhost:3000",
-});
 // const api = axios.create({
-//   baseURL: "https://dev-connect-server.vercel.app",
+//   baseURL: "http://localhost:3000",
 // });
+const api = axios.create({
+  baseURL: "https://dev-connect-server.vercel.app",
+});
 
-// Axios request interceptor to add Firebase ID token
+// Axios request interceptor to add Firebase ID tokennpm ru
 api.interceptors.request.use(
   async (config) => {
     const auth = getAuth();
@@ -73,9 +73,16 @@ export const updateVote = async (postId, voteType) => {
 };
 
 export const saveUserIfNew = async (userData) => {
-  const response = await api.put("/users", userData);
+  const response = await api.post("/users", userData);
+  console.log({ userData });
   return response.data;
 };
+
+export const fetchAllUsers = async () => {
+  const response = await api.get("/users");
+  return response.data;
+};
+
 export const fetchUserByEmail = async (email) => {
   const response = await api.get(`/users/${email}`);
   return response.data;
@@ -130,5 +137,20 @@ export const updateUserPaymentStatus = async (email) => {
 };
 export const fetchReportedComments = async () => {
   const response = await api.get("/reported-comments");
+  return response.data;
+};
+export const toggleUserRole = async (email, currentRole) => {
+  const response = await api.patch("/users/admin", {
+    email,
+    role: currentRole,
+  });
+  return response.data;
+};
+export const createAnnouncement = async (announcementData) => {
+  const response = await api.post("/announcements", announcementData);
+  return response.data;
+};
+export const deleteAnnouncementById = async (id) => {
+  const response = await api.delete(`/announcements/${id}`);
   return response.data;
 };

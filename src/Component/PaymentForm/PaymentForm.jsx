@@ -51,18 +51,17 @@ const PaymentForm = ({ userInfo, dataRefetch }) => {
   };
 
   const validateCard = async () => {
-    if (method !== "bkash") {
-      const cardElement = elements.getElement(CardElement);
-      const { error } = await stripe.createPaymentMethod({
-        type: "card",
-        card: cardElement,
-      });
+    const cardElement = elements.getElement(CardElement);
+    const { error } = await stripe.createPaymentMethod({
+      type: "card",
+      card: cardElement,
+    });
 
-      if (error) {
-        showErrorAlert(error.message || "Invalid card details");
-        return false;
-      }
+    if (error) {
+      showErrorAlert(error.message || "Invalid card details");
+      return false;
     }
+
     return true;
   };
 
@@ -84,23 +83,6 @@ const PaymentForm = ({ userInfo, dataRefetch }) => {
       }
 
       const clientSecret = await createPaymentIntent(5);
-
-      if (method === "bkash") {
-        setTimeout(async () => {
-          showSuccessAlert("bKash payment successful!");
-          console.log("bKash payment:", data.bkash);
-
-          try {
-            await updateUserPaymentStatus(userInfo?.email);
-            dataRefetch();
-          } catch (err) {
-            console.error("Failed to update payment status:", err);
-          }
-
-          setProcessing(false);
-        }, 1500);
-        return;
-      }
 
       const { error, paymentIntent } = await stripe.confirmCardPayment(
         clientSecret,
@@ -155,10 +137,6 @@ const PaymentForm = ({ userInfo, dataRefetch }) => {
               value: "mastercard",
               src: "https://img.icons8.com/color/48/000000/mastercard.png",
             },
-            {
-              value: "bkash",
-              src: "https://download.logo.wine/logo/BKash/BKash-Logo.wine.png",
-            },
           ].map((item) => (
             <label
               key={item.value}
@@ -189,62 +167,31 @@ const PaymentForm = ({ userInfo, dataRefetch }) => {
         </div>
       </div>
 
-      {/* Form */}
+      {/* Card Payment Form */}
       <form onSubmit={handleSubmit(handlePayment)} className="space-y-4">
-        {method === "bkash" ? (
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              bKash Number
-            </label>
-            <input
-              {...register("bkash", {
-                required: "bKash number is required",
-                pattern: {
-                  value: /^01[3-9]\d{8}$/,
-                  message: "Please enter a valid bKash number",
-                },
-              })}
-              type="text"
-              placeholder="01XXXXXXXXX"
-              className="w-full bg-base-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-primary focus:border-transparent"
-            />
-            {errors.bkash && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.bkash.message}
-              </p>
-            )}
-          </div>
-        ) : (
-          <>
-            <div>
-              <label className="block text-sm font-medium mb-1">
-                Name on Card
-              </label>
-              <input
-                {...register("cardName", {
-                  required: "Cardholder name is required",
-                })}
-                type="text"
-                placeholder="Muntasir Tonoy"
-                className="w-full rounded-md px-4 py-2 bg-base-300 focus:ring-2 focus:ring-primary focus:border-transparent"
-              />
-              {errors.cardName && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.cardName.message}
-                </p>
-              )}
-            </div>
+        <div>
+          <label className="block text-sm font-medium mb-1">Name on Card</label>
+          <input
+            {...register("cardName", {
+              required: "Cardholder name is required",
+            })}
+            type="text"
+            placeholder="Muntasir Tonoy"
+            className="w-full rounded-md px-4 py-2 bg-base-300 focus:ring-2 focus:ring-primary focus:border-transparent"
+          />
+          {errors.cardName && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.cardName.message}
+            </p>
+          )}
+        </div>
 
-            <div>
-              <label className="block text-sm font-medium mb-1">
-                Card Info
-              </label>
-              <div className="p-3 rounded-md bg-base-300 focus-within:ring-2 focus-within:ring-primary">
-                <CardElement options={CARD_OPTIONS} />
-              </div>
-            </div>
-          </>
-        )}
+        <div>
+          <label className="block text-sm font-medium mb-1">Card Info</label>
+          <div className="p-3 rounded-md bg-base-300 focus-within:ring-2 focus-within:ring-primary">
+            <CardElement options={CARD_OPTIONS} />
+          </div>
+        </div>
 
         <button
           type="submit"
@@ -278,7 +225,7 @@ const PaymentForm = ({ userInfo, dataRefetch }) => {
               Processing...
             </span>
           ) : (
-            `Pay`
+            "Pay"
           )}
         </button>
       </form>

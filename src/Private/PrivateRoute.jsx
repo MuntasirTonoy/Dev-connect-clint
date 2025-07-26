@@ -35,7 +35,8 @@ const PrivateRoute = ({ children, allowedRoles }) => {
       showConfirmButton: false,
       timer: 2000,
     });
-    return <Navigate to="/join" state={{ from: location }} replace />;
+    console.log(location);
+    return <Navigate to="/join" state={{ from: location.pathname }} replace />;
   }
 
   // Check if route requires specific roles

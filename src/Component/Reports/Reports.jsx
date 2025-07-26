@@ -69,7 +69,7 @@ const Reports = () => {
       {comments.length === 0 ? (
         <p className="text-gray-600">No reported comments found.</p>
       ) : (
-        <div className="space-y-6">
+        <div className="space-y-6 overflow-y-auto max-h-[600px] pr-2">
           {comments.map((comment) => {
             const post = postsById[comment.postId];
             return (
