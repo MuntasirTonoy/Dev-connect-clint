@@ -1,14 +1,14 @@
 import axios from "axios";
 import { getAuth } from "firebase/auth";
 
-// const api = axios.create({
-//   baseURL: "http://localhost:3000",
-// });
 const api = axios.create({
-  baseURL: "https://dev-connect-server.vercel.app",
+  baseURL: "http://localhost:3000",
 });
+// const api = axios.create({
+//   baseURL: "https://dev-connect-server.vercel.app",
+// });
 
-// Axios request interceptor to add Firebase ID tokennpm ru
+// Axios request interceptor to add Firebase ID tokennpm run
 api.interceptors.request.use(
   async (config) => {
     const auth = getAuth();
@@ -103,6 +103,11 @@ export const postComment = async (commentData) => {
   return response.data;
 };
 
+export const fetchAllComments = async () => {
+  const response = await api.get("/comments");
+  return response.data;
+};
+
 export const fetchCommentsByPostId = async (postId) => {
   const response = await api.get(`/comments/${postId}`);
   return response.data;
@@ -153,4 +158,8 @@ export const createAnnouncement = async (announcementData) => {
 export const deleteAnnouncementById = async (id) => {
   const response = await api.delete(`/announcements/${id}`);
   return response.data;
+};
+export const addNewTag = async (tagData) => {
+  const res = await api.post("/tags", tagData);
+  return res.data;
 };
