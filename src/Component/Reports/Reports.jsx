@@ -69,7 +69,7 @@ const Reports = () => {
       {comments.length === 0 ? (
         <p className="text-gray-600">No reported comments found.</p>
       ) : (
-        <div className="space-y-6 overflow-y-auto max-h-[600px] pr-2">
+        <div className="space-y-6 pr-2">
           {comments.map((comment) => {
             const post = postsById[comment.postId];
             return (
@@ -109,8 +109,7 @@ const ReportedCommentCard = ({ comment, post, onDelete }) => {
         <div className="space-y-2 mt-2">
           {post?.title && (
             <p className="text-sm text-base-content">
-              Post Title:{" "}
-              <span className="font-medium text-gray-800">{post.title}</span>
+              Post Title: <span className="font-medium">{post.title}</span>
             </p>
           )}
 
@@ -126,7 +125,7 @@ const ReportedCommentCard = ({ comment, post, onDelete }) => {
       <div className="flex flex-col gap-3 w-full md:w-auto">
         <button
           onClick={() => onDelete(comment._id)}
-          className="btn btn-sm w-full md:w-auto hover:bg-red-600 hover:text-white"
+          className="btn  btn-sm w-full md:w-auto hover:bg-red-600 hover:text-white"
         >
           Delete Comment
         </button>
