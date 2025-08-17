@@ -40,7 +40,7 @@ const AdminPieChart = () => {
   if (loading) return <Loading />;
 
   return (
-    <div className="bg-base-100 p-6 w-full rounded-2xl shadow-xs ">
+    <div className="bg-base-200 p-6 w-full rounded-xl  mt-5 shadow-xs ">
       <h2 className="text-2xl font-bold mb-4 text-center text-base-content">
         Overview
       </h2>

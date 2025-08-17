@@ -82,7 +82,7 @@ const DashBoard = () => {
             </label>
           </div>
 
-          <main className="p-4 w-full ">
+          <main className="p-4 w-full  mt-20 ">
             <Outlet />
           </main>
         </div>

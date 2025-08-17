@@ -12,7 +12,7 @@ const MyProfile = () => {
 
   return (
     <div data-aos="fade-up" data-aos-delay="100">
-      <div className=" bg-base-200 flex p-6 md:p-20 md:gap-20 justify-center md:justify-start gap-15 flex-wrap  text-base-content">
+      <div className=" bg-base-200 flex p-6 md:p-20 md:gap-20 justify-center md:justify-start gap-15 flex-wrap  text-base-content rounded-lg">
         <div className="">
           <div className="flex flex-col items-center gap-2">
             <img
