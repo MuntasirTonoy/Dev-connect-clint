@@ -78,11 +78,12 @@ export const saveUserIfNew = async (userData) => {
   return response.data;
 };
 
-export const fetchAllUsers = async () => {
-  const response = await api.get("/users");
+export const fetchAllUsers = async (searchQuery = "") => {
+  const response = await api.get("/users", {
+    params: searchQuery ? { search: searchQuery } : {},
+  });
   return response.data;
 };
-
 export const fetchUserByEmail = async (email) => {
   const response = await api.get(`/users/${email}`);
   return response.data;

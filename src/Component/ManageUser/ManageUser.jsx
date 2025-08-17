@@ -42,10 +42,10 @@ const ManageUsers = () => {
     }
   };
 
-  // const handleSearch = (e) => {
-  //   e.preventDefault();
-  //   setSearchQuery(search);
-  // };
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setSearchQuery(search); // triggers react-query refetch
+  };
 
   if (isLoading) return <Loading />;
 
@@ -58,11 +58,11 @@ const ManageUsers = () => {
       <h2 className="text-3xl font-bold mb-4">Manage Users</h2>
 
       {/* Search Bar */}
-      <form className="mb-4 flex gap-2">
+      <form onSubmit={handleSearch} className="mb-4 flex gap-2">
         <input
           type="text"
           className="input input-bordered w-full max-w-sm"
-          placeholder="Search by username..."
+          placeholder="Search by username or email..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
