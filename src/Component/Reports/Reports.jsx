@@ -61,7 +61,7 @@ const Reports = () => {
   if (isError) return <p>Failed to load reported comments</p>;
 
   return (
-    <div className="p-4 md:p-8 max-w-5xl mx-auto">
+    <div data-aos="fade-up" className="p-4 md:p-8 max-w-5xl mx-auto">
       <h2 className="md:text-4xl text-2xl md:font-bold font-semibold mb-5">
         Reported Comments
       </h2>

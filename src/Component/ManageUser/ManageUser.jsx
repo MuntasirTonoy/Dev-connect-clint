@@ -50,7 +50,7 @@ const ManageUsers = () => {
   if (isLoading) return <Loading />;
 
   return (
-    <div className="p-6 bg-base-200 rounded-xl shadow">
+    <div data-aos="fade-up" className="p-6 bg-base-200 rounded-xl shadow">
       <Helmet>
         <title>Manage Users</title>
       </Helmet>
