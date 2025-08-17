@@ -50,7 +50,7 @@ const DashBoard = () => {
         <title>Dashboard</title>
       </Helmet>
 
-      <div className="drawer lg:drawer-open">
+      <div className="drawer lg:drawer-open ">
         {/* ✅ Drawer Toggle Button (Hamburger) */}
         <input
           id="dashboard-drawer"
@@ -83,14 +83,11 @@ const DashBoard = () => {
           </div>
 
           <main className="p-4 w-full ">
-            {/* <h1 className="md:text-4xl text-2xl md:font-bold font-semibold mb-5">
-              Dashboard
-            </h1> */}
             <Outlet />
           </main>
         </div>
 
-        {/* ✅ Sidebar menu */}
+        {/*  Sidebar menu */}
         <div className="drawer-side">
           <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
           <ul className="menu p-4 w-64 pt-20 min-h-full bg-base-200 font-semibold text-base-content">

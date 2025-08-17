@@ -17,7 +17,7 @@ const Membership = () => {
   });
   if (userInfo?.paymentStatus === "paid") {
     return (
-      <div className="rounded-lg border border-green-500 flex items-center justify-center h-[30vh] text-center m-10 ">
+      <div className="rounded-lg border border-green-500 flex items-center justify-center h-[30vh] text-center m-10 mt-10 ">
         <Helmet>
           <title>Membership</title>
         </Helmet>
@@ -35,7 +35,7 @@ const Membership = () => {
   }
 
   return (
-    <section className="max-w-7xl mx-auto px-4 py-12 grid md:grid-cols-3 gap-8">
+    <section className="max-w-7xl mx-auto px-4 py-12 grid md:grid-cols-3 gap-8 mt-10">
       <Helmet>
         <title>Membership | DevConnect</title>
       </Helmet>

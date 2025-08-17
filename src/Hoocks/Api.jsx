@@ -1,12 +1,12 @@
 import axios from "axios";
 import { getAuth } from "firebase/auth";
 
-const api = axios.create({
-  baseURL: "http://localhost:3000",
-});
 // const api = axios.create({
-//   baseURL: "https://dev-connect-server.vercel.app",
+//   baseURL: "http://localhost:3000",
 // });
+const api = axios.create({
+  baseURL: "https://dev-connect-server.vercel.app",
+});
 
 // Axios request interceptor to add Firebase ID tokennpm run
 api.interceptors.request.use(

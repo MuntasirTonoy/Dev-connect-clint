@@ -115,9 +115,7 @@ const MyProfile = () => {
           )}
         </div>
       </div>
-      <div>
-        <AdminPieChart />
-      </div>
+      <div>{userInfo.role === "admin" && <AdminPieChart />}</div>
     </div>
   );
 };

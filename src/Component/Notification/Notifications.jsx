@@ -8,7 +8,7 @@ const Notifications = () => {
       <Helmet>
         <title>Notifications</title>
       </Helmet>
-      <div className="my-10">
+      <div className="my-20">
         <Announcements />
       </div>
     </div>

@@ -9,7 +9,7 @@ const HomePage = () => {
   const [searchResults, setSearchResults] = useState(null); // null = no search yet
 
   return (
-    <div className="space-y-20">
+    <div className="space-y-20 mt-20">
       <Helmet>
         <title>Home | DevConnect</title>
       </Helmet>
