@@ -88,7 +88,7 @@ const DashBoard = () => {
         </div>
 
         {/*  Sidebar menu */}
-        <div className="drawer-side">
+        <div className="drawer-side pt-5">
           <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
           <ul className="menu p-4 w-64 pt-20 min-h-full bg-base-200 font-semibold text-base-content">
             <li>
