@@ -1,9 +1,7 @@
 import { NavLink, Outlet } from "react-router";
-import { useContext } from "react";
+import { useContext, createContext } from "react";
 import { AuthContext } from "../../Firebase/AuthContext";
 import { useQuery } from "@tanstack/react-query";
-
-import { createContext } from "react";
 import { fetchPostsByEmail, fetchUserByEmail } from "../../Hoocks/Api";
 import Loading from "../../Component/Loading/Loading";
 import { Helmet } from "react-helmet-async";
@@ -50,16 +48,17 @@ const DashBoard = () => {
         <title>Dashboard</title>
       </Helmet>
 
-      <div className="drawer lg:drawer-open ">
-        {/* ✅ Drawer Toggle Button (Hamburger) */}
+      <div className="drawer lg:drawer-open mt-20">
+        {/* ✅ Drawer Toggle */}
         <input
           id="dashboard-drawer"
           type="checkbox"
           className="drawer-toggle"
         />
 
+        {/* ✅ Page content */}
         <div className="drawer-content flex flex-col">
-          {/* ✅ Page content here */}
+          {/* ✅ Mobile/Tablet Navbar with Hamburger */}
           <div className="w-full flex justify-between items-center px-4 py-2 bg-base-100 border-b lg:hidden">
             <label
               htmlFor="dashboard-drawer"
@@ -82,21 +81,21 @@ const DashBoard = () => {
             </label>
           </div>
 
-          <main className="p-4 w-full  mt-20 ">
+          {/* ✅ Main content */}
+          <main className="p-4 w-full">
             <Outlet />
           </main>
         </div>
 
-        {/*  Sidebar menu */}
-        <div className="drawer-side pt-5">
+        {/* ✅ Drawer sidebar */}
+        <div className="drawer-side pt-20">
           <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
-          <ul className="menu p-4 w-64 pt-20 min-h-full bg-base-200 font-semibold text-base-content">
+          <ul className="menu p-4 w-64 min-h-full bg-base-200 font-semibold text-base-content">
             <li>
               <NavLink to="/dashboard" end>
                 My Profile
               </NavLink>
             </li>
-
             <li>
               <NavLink to="/dashboard/my-posts">My Posts</NavLink>
             </li>

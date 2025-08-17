@@ -11,35 +11,46 @@ const MyProfile = () => {
   const { posts, userInfo } = useContext(DashboardContext);
 
   return (
-    <div data-aos="fade-up" data-aos-delay="100">
-      <div className=" bg-base-200 flex p-6 md:p-20 md:gap-20 justify-center md:justify-start gap-15 flex-wrap  text-base-content rounded-lg">
-        <div className="">
-          <div className="flex flex-col items-center gap-2">
+    <div data-aos="fade-up" data-aos-delay="100" className="w-full">
+      <div className="bg-base-200 p-6 md:p-10 lg:p-20 text-base-content rounded-lg">
+        <div className="flex flex-col md:grid md:grid-cols-2 gap-10">
+          {/* ✅ Left Side - Profile Info */}
+          <div className="flex flex-col items-center md:items-start gap-2">
             <img
               src={userInfo?.photoURL || "https://via.placeholder.com/150"}
               alt="user"
-              className="w-24 h-24 rounded-full ring-2 ring-offset-2"
+              className="w-24 h-24 md:w-32 md:h-32 rounded-full ring-2 ring-offset-2"
             />
-            <h2 className="text-xl flex gap-1 items-center font-bold">
+            <h2 className="text-xl md:text-2xl flex gap-1 items-center font-bold mt-2">
               {userInfo?.name}
               <span className="pt-1 rounded-full">
                 <HiBadgeCheck />
               </span>
             </h2>
-            <p className="text-sm bg-base-300 px-3 py-2 rounded-full">
+            <p className="text-sm md:text-base bg-base-300 px-3 py-2 rounded-full">
               {userInfo?.email}
             </p>
-            {/* Badges */}
-            <div className="mt-2 md:mt-5">
-              <h1>Achivements</h1>
-              <div className="flex justify-center items-center gap-4 mt-2 ">
-                {userInfo?.paymentStatus === "paid" && (
-                  <img src={goldenBadge} alt="golden badge" className="w-10" />
-                )}
 
-                <img src={bronzeBadge} alt="bronze badge" className="w-10" />
+            {/* ✅ Badges */}
+            <div className="mt-4">
+              <h1 className="font-semibold">Achievements</h1>
+              <div className="flex justify-center md:justify-start items-center gap-4 mt-2">
+                {userInfo?.paymentStatus === "paid" && (
+                  <img
+                    src={goldenBadge}
+                    alt="golden badge"
+                    className="w-10 md:w-12"
+                  />
+                )}
+                <img
+                  src={bronzeBadge}
+                  alt="bronze badge"
+                  className="w-10 md:w-12"
+                />
               </div>
             </div>
+
+            {/* ✅ User Stats */}
             <div className="mt-6 w-full max-w-xs">
               <h3 className="text-lg font-semibold mb-3 text-base-content">
                 User Stats
@@ -75,47 +86,53 @@ const MyProfile = () => {
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Recent Posts */}
-
-        <div>
-          {userInfo.role === "admin" ? (
-            <AddTags />
-          ) : (
-            <div>
-              <h3 className="text-3xl font-bold mb-2">Recent Posts</h3>
-              {posts.length > 0 ? (
-                <ul className="list-decimal pl-5">
-                  {posts
-                    .sort(
-                      (a, b) => new Date(b.timeOfPost) - new Date(a.timeOfPost)
-                    ) // Sort by date (newest first)
-                    .slice(0, 3) // Take only 3 most recent
-                    .map((post) => (
-                      <li
-                        key={post._id}
-                        className="text-lg  mb-3 p-2 bg-base-300 rounded"
-                      >
-                        {post.title}
-                        <div className="text-xs opacity-70">
-                          on{" "}
-                          {format(
-                            new Date(post.timeOfPost),
-                            " h:mm a, MMMM d, yyyy"
-                          )}
-                        </div>
-                      </li>
-                    ))}
-                </ul>
-              ) : (
-                <p className="text-sm">No recent posts found.</p>
-              )}
-            </div>
-          )}
+          {/* ✅ Right Side - Recent Posts / Admin */}
+          <div>
+            {userInfo.role === "admin" ? (
+              <AddTags />
+            ) : (
+              <div>
+                <h3 className="text-2xl md:text-3xl font-bold mb-2">
+                  Recent Posts
+                </h3>
+                {posts.length > 0 ? (
+                  <ul className="list-decimal pl-5">
+                    {posts
+                      .sort(
+                        (a, b) =>
+                          new Date(b.timeOfPost) - new Date(a.timeOfPost)
+                      )
+                      .slice(0, 3)
+                      .map((post) => (
+                        <li
+                          key={post._id}
+                          className="text-lg mb-3 p-2 bg-base-300 rounded"
+                        >
+                          {post.title}
+                          <div className="text-xs opacity-70">
+                            on{" "}
+                            {format(
+                              new Date(post.timeOfPost),
+                              "h:mm a, MMMM d, yyyy"
+                            )}
+                          </div>
+                        </li>
+                      ))}
+                  </ul>
+                ) : (
+                  <p className="text-sm">No recent posts found.</p>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
-      <div>{userInfo.role === "admin" && <AdminPieChart />}</div>
+
+      {/* ✅ Admin Pie Chart (always full width below) */}
+      <div className="mt-8">
+        {userInfo.role === "admin" && <AdminPieChart />}
+      </div>
     </div>
   );
 };

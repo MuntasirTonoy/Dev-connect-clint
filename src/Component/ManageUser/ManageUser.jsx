@@ -107,7 +107,7 @@ const ManageUsers = () => {
                     }`}
                     onClick={() => handleToggleRole(user.email, user.role)}
                   >
-                    {user.role === "admin" ? "Remove Admin" : "Make Admin"}
+                    {user.role === "admin" ? "Remove" : "Make Admin"}
                   </button>
                 </td>
               </tr>
